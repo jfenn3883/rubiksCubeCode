@@ -1,0 +1,938 @@
+# space scrambles the cube randomly
+# r, u, b, etc, move the cube in there respective ways
+# holding shift will do the counter clockwise move
+
+
+
+# SETUP! defs, imports, and initiation
+import random
+
+numSides = 3 # the number of sides 
+blockSize = 240 / numSides # the size of one piece
+blockColorSize = blockSize * .9 # the size of the color in proportion
+viewState = 'locked' # for the toggleable camera
+w = 3
+v = 3
+colors = 6
+
+cubeX = 0. # these are used for offsetting the visual cube if there is a cube rotation
+cubeY = 0.
+cubeZ = 0.
+
+cubeOffsetX = (PI / 2) * cubeX # i have these here instead of in the rotate part bc python is dumb
+cubeOffsetY = (PI / 2) * cubeY # it just doesnt work if you put this in the rotate part
+cubeOffsetZ = (PI / 2) * cubeZ # gives you a 'no + operater between NoneType & Float'
+
+
+class Block(object): # block
+
+# if there is a None, it means that color doesnt exist
+    def __init__(self, name, type, xFace, yFace, zFace):
+        self.name = name
+        self.type = type
+        self.xFace = xFace
+        self.yFace = yFace
+        self.zFace = zFace
+""" i use a pseudo-tracking method to keep track of the blocks, by creating the cube solved, 
+the cube always starts in the same state, i just make sure to adjust the value of
+the block so that they match the actual cube """
+# creating the blocks, set up in the same format as Cube 
+white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
+orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
+yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
+    
+white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
+green_ =                 Block('green_',                       'center',   'green',   None,       None)
+yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
+    
+white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
+red_green =              Block('red_green',                    'edge',     'green',   'red',      None)
+yellow_red_green =       Block('yellow_red_green',             'corner',   'green',   'red',      'yellow')
+    
+    
+white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
+orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
+yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
+    
+white_ =                 Block('white_',                       'center',   None,      None,       'white')
+core =                   Block('core',                         'core',     None,      None,       None)
+yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
+    
+white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
+red_ =                   Block('red_',                         'center',   None,      'red',      None)
+yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
+    
+    
+white_orange_blue =      Block('white_orange_blue',            'corner',   'blue',    'orange',   'white')
+orange_blue =            Block('orange_blue',                  'edge',     'blue',    'orange',   None)
+yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
+    
+white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
+blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
+yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
+    
+white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
+red_blue =               Block('red_blue',                     'edge',     'blue',    'red',      None)
+yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
+    
+    
+    # cube dictionary
+Cube = [# this is the actual setup for the cube, and can be used to figure out what is where
+                  # can be referanced by x, y, z
+                  # 0, 0, 0 is the left, front, bottom
+                
+[[ white_orange_green, orange_green, yellow_orange_green ], 
+[ white_green, green_, yellow_green ],
+[ white_red_green, red_green, yellow_red_green ]],
+    
+[[ white_orange, orange_, yellow_orange ], 
+[ white_, core, yellow_ ],
+[ white_red, red_, yellow_red ]],
+    
+[[ white_orange_blue, orange_blue, yellow_orange_blue ], 
+[ white_blue, blue_, yellow_blue ],
+[ white_red_blue, red_blue, yellow_red_blue ]]]
+    
+block = [ # so the cube rotation works!
+[range(0, 6), range(0, 6), range(0, 6)],
+[range(0, 6), range(0, 6), range(0, 6)],
+[range(0, 6), range(0, 6), range(0, 6)]    ]
+    
+    
+    # *************************************************************************************************
+    
+    
+def setup(): # this only runs once
+    
+    size(600, 600, P3D) # creates window in 3d mode 
+    strokeWeight(5)
+    noFill()
+    rectMode(CENTER)
+    for l in range(0, v):
+        for m in range(0, w):
+            for n in range(0, colors):
+                block[l][m][n] = n
+
+    
+# *************************************************************************************************
+    
+    
+def transferVariables(num): # this only runs once
+    global Cube
+    
+    if num == '1':
+        return Cube
+
+    
+        
+# *************************************************************************************************
+
+
+def draw():
+    
+    background(100, 100, 150) # background color
+    fill(255)
+    stroke(0)
+    translate(width / 2, height / 2) # moves the cube so its actually in the frame
+    
+    # sets the default locked camera angle
+    rotateX((3 * PI / 4) + (PI / 16) + cubeOffsetX) # in this, the cube is set to a default position, which is + PI / 2 off normal
+    rotateY((3 * PI / 4) + (PI / 16) + cubeOffsetY) # the cube offset accounts for any rotations, like X or X_
+    rotateZ(cubeOffsetZ) # offsetting!
+    
+    if viewState == 'free': # if its free, the camera follows the mouse
+        rotateX(-mouseY * PI / 300)
+        rotateY(mouseX * PI / 300)
+
+    
+    box(239) # creates a box
+    
+    for l in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
+        for m in range(0, 3): # they run through and create all of the colors needed at the correct positions
+            for n in range(0, 6):
+                if n == 0: # blue
+                    pushMatrix()
+                    translate(3 * blockSize / 2, 0, 0)
+                    rotateY(PI/2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if n == 1: # green
+                    pushMatrix()
+                    translate(-3 * blockSize / 2, 0, 0)
+                    rotateY(PI/2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if n == 2: # white
+                    pushMatrix()
+                    translate(0, 3 * blockSize / 2, 0)
+                    rotateX(PI/2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if n == 3: # yellow
+                    pushMatrix()
+                    translate(0, -3 * blockSize / 2, 0)
+                    rotateX(PI/2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if n == 4: # red
+                    pushMatrix()
+                    translate(0, 0, 3 * blockSize / 2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if n == 5: # orange
+                    pushMatrix()
+                    translate(0, 0, -3 * blockSize / 2)
+                    colored(block[l][m][n])
+                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    popMatrix()
+                    
+   
+     # *************************************************************************************************
+    
+    
+def mouseClicked(): # if the mouse is clicked, it changes the value of viewState
+                    # which is interpreted in DRAW to change the camera mode
+    global viewState
+    
+    if viewState == 'locked':
+        viewState = 'free'
+    
+    elif viewState == 'free':
+        viewState = 'locked'
+
+    
+     # *************************************************************************************************   
+
+
+def scramble(): # generates a random 25 move scramble in list format that i can quickly run through for an initial scramble
+    scramble_length = 25
+    moves = ["R", "R_", "R2", "L", "L_", "L2", "U", "U_", "U2", "D", "D_", "D2", "F", "F_", "F2", "B", "B_", "B2"]  
+    scramble = []
+    
+    for i in range(0, scramble_length + 1):
+        random_move = random.randint(0, len(moves) - 1)
+        
+        if i > 0:
+            while moves[random_move][0] == prev_move[0]:
+                random_move = random.randint(0, len(moves) - 1)      
+        
+        scramble.append(moves[random_move])
+        prev_move = moves[random_move]
+    return scramble
+     
+     
+     # *************************************************************************************************
+
+     
+# gets run by draw if a key is released, it is here for easier reading and a smaller draw funtion
+
+def keyPressed(): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
+    if key == 'r':
+        R()
+        test_ori()
+    elif key == 'R':
+        R_()
+        test_ori()
+    elif key == 'L':
+        L_()
+        test_ori()
+    elif key == 'l':
+        L()
+        test_ori()
+    elif key == 'f':
+        F()
+        test_ori()
+    elif key == 'F':
+        F_()
+        test_ori()
+    elif key == 'b':
+        B()
+        test_ori()
+    elif key == 'B':
+        B_()
+        test_ori()
+    elif key == 'u':
+        U()
+        test_ori()
+    elif key == 'U':
+        U_()
+        test_ori()
+    elif key == 'd':
+        D()
+        test_ori()
+    elif key == 'D':
+        D_()
+        test_ori()
+    elif key == ' ':
+        applyScramble()
+
+
+    # *************************************************************************************************
+    
+    
+def applyScramble():
+    sk = scramble()
+    for move in sk:
+        if move == 'R':
+            R()
+        elif move == 'R_':
+            R_()
+        elif move == 'L_':
+            L_()
+        elif move == 'L':
+            L()
+        elif move == 'F':
+            F()
+        elif move == 'F_':
+            F_()
+        elif move == 'B':
+            B()
+        elif move == 'B_':
+            B_()
+        elif move == 'U':
+            U()
+        elif move == 'U_':
+            U_()
+    
+    
+    # *************************************************************************************************
+    
+    
+def colored(c): # handles painting the colors
+  if c == 0:
+    fill(0, 150, 0) # green
+  if c == 1:
+    fill(0, 100, 255) # blue
+  if c == 2:
+    fill(200, 200, 0) # yellow
+  if c == 3:
+    fill(200) # white
+  if c == 4:
+    fill(255, 150, 0) # orange
+  if c == 5:
+    fill(255, 40, 40) # red
+  if c == 6:
+    fill(150)
+    
+    
+    # *************************************************************************************************
+    
+    
+def test_ori():
+    for xPos in range(0, 3):
+        for yPos in range(0, 3):
+            for zPos in range(0, 3):
+                print xPos, yPos, zPos, Cube[xPos][yPos][zPos].name
+                print Cube[xPos][yPos][zPos].xFace, Cube[xPos][yPos][zPos].yFace, Cube[xPos][yPos][zPos].zFace
+                print ""
+                print ""
+    
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    
+
+    
+    
+    
+    
+    
+    
+    
+    # these functions handle turning the cube 
+
+def R(): # done NAT
+    global Cube
+    
+    
+    # edges
+    subs                     = Cube[2][0][1]
+    Cube[2][0][1]      = Cube[2][1][0]
+    Cube[2][1][0]      = Cube[2][2][1]
+    Cube[2][2][1]      = Cube[2][1][2]
+    Cube[2][1][2]      = subs
+
+    # corners
+    subs                     = Cube[2][0][0]
+    Cube[2][0][0]      = Cube[2][2][0]
+    Cube[2][2][0]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[2][0][2]
+    Cube[2][0][2]      = subs
+
+    # orientation
+    for yPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[2][yPos][zPos].yFace
+            Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
+            Cube[2][yPos][zPos].zFace = subs
+
+
+
+    # visual movement
+    
+    for count in range(0, w):
+        subs =                   block[0][count]    [2]
+        block[0][count]    [2] = block[0][w-1-count][4]
+        block[0][w-1-count][4] = block[0][w-1-count][3]
+        block[0][w-1-count][3] = block[0][count]    [5]
+        block[0][count]    [5] = subs
+    
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[v-1]       [ecount]    [1]
+        block[v-1]       [ecount]    [1] = block[v-1-ecount][w-1]       [1]
+        block[v-1-ecount][w-1]       [1] = block[0]         [w-1-ecount][1]
+        block[0]         [w-1-ecount][1] = block[ecount]    [0]         [1]
+        block[ecount]    [0]         [1] = subs
+                           
+          
+  # *************************************************************************************************  
+  
+  
+def R_(): # done NAT
+    global Cube
+    
+    # edges
+    subs                     = Cube[2][0][1]
+    Cube[2][0][1]      = Cube[2][1][2]
+    Cube[2][1][2]      = Cube[2][2][1]
+    Cube[2][2][1]      = Cube[2][1][0]
+    Cube[2][1][0]      = subs
+
+    # corners
+    subs                     = Cube[2][0][0]
+    Cube[2][0][0]      = Cube[2][0][2]
+    Cube[2][0][2]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[2][2][0]
+    Cube[2][2][0]      = subs
+    
+    # orientation
+    for yPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[2][yPos][zPos].yFace
+            Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
+            Cube[2][yPos][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                   = block[0][count]    [5]
+        block[0][count]    [5] = block[0][w-1-count][3]
+        block[0][w-1-count][3] = block[0][w-1-count][4]
+        block[0][w-1-count][4] = block[0][count]    [2]
+        block[0][count]    [2] = subs
+  
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[ecount]    [0]         [1]
+        block[ecount]    [0]         [1] = block[0]         [w-1-ecount][1]
+        block[0]         [w-1-ecount][1] = block[v-1-ecount][w-1]       [1]
+        block[v-1-ecount][w-1]       [1] = block[v-1]       [ecount]    [1]
+        block[v-1]       [ecount]    [1] = subs
+    
+    
+    # *************************************************************************************************
+  
+  
+def R2():
+    R()
+    R()  
+  
+  
+    # *************************************************************************************************  
+  
+  
+def L(): # done NAT
+    global Cube
+    
+    # edges
+    subs                     = Cube[0][0][1]
+    Cube[0][0][1]      = Cube[0][1][2]
+    Cube[0][1][2]      = Cube[0][2][1]
+    Cube[0][2][1]      = Cube[0][1][0]
+    Cube[0][1][0]      = subs
+
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[0][0][2]
+    Cube[0][0][2]      = Cube[0][2][2]
+    Cube[0][2][2]      = Cube[0][2][0]
+    Cube[0][2][0]      = subs
+    
+    # orientation
+    for yPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[0][yPos][zPos].yFace
+            Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
+            Cube[0][yPos][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                     = block[v-1][count]    [5]
+        block[v-1][count]    [5] = block[v-1][w-1-count][3]
+        block[v-1][w-1-count][3] = block[v-1][w-1-count][4]
+        block[v-1][w-1-count][4] = block[v-1][count]    [2]
+        block[v-1][count]    [2] = subs
+  
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[ecount]    [0]         [0]
+        block[ecount]    [0]         [0] = block[0]         [w-1-ecount][0]
+        block[0]         [w-1-ecount][0] = block[v-1-ecount][w-1]       [0]
+        block[v-1-ecount][w-1]       [0] = block[v-1]       [ecount]    [0]
+        block[v-1]       [ecount]    [0] = subs
+  
+  
+  
+  # *************************************************************************************************  
+  
+  
+def L_(): # done
+    global Cube
+    
+    # edges
+    subs                     = Cube[0][0][1]
+    Cube[0][0][1]      = Cube[0][1][0]
+    Cube[0][1][0]      = Cube[0][2][1]
+    Cube[0][2][1]      = Cube[0][1][2]
+    Cube[0][1][2]      = subs
+
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[0][2][0]
+    Cube[0][2][0]      = Cube[0][2][2]
+    Cube[0][2][2]      = Cube[0][0][2]
+    Cube[0][0][2]      = subs
+    
+    # orientation
+    for yPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[0][yPos][zPos].yFace
+            Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
+            Cube[0][yPos][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w): # edges
+        subs                              = block[v-1][count][2]
+        block[v-1][count]    [2]          = block[v-1][w-1-count][4]
+        block[v-1][w-1-count][4]          = block[v-1][w-1-count][3]
+        block[v-1][w-1-count][3]          = block[v-1][count]    [5]
+        block[v-1][count]    [5]          = subs
+        
+    for ecount in range(0, w - 1): # corners
+        subs                              = block[v-1]       [ecount]    [0]
+        block[v-1]       [ecount]    [0]  = block[v-1-ecount][w-1]       [0]
+        block[v-1-ecount][w-1]       [0]  = block[0]         [w-1-ecount][0]
+        block[0]         [w-1-ecount][0]  = block[ecount]    [0]         [0]
+        block[ecount]    [0]         [0]  = subs
+        
+        
+    # *************************************************************************************************  
+  
+  
+def L2():
+    L()
+    L()  
+  
+  
+    # *************************************************************************************************
+
+
+def F(): # done NAT
+    global Cube
+    
+    # edges
+    subs                     = Cube[0][0][1]
+    Cube[0][0][1]      = Cube[1][0][0]
+    Cube[1][0][0]      = Cube[2][0][1]
+    Cube[2][0][1]      = Cube[1][0][2]
+    Cube[1][0][2]      = subs
+
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[2][0][0]
+    Cube[2][0][0]      = Cube[2][0][2]
+    Cube[2][0][2]      = Cube[0][0][2]
+    Cube[0][0][2]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[xPos][0][zPos].xFace
+            Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
+            Cube[xPos][0][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                           = block[0]        [count]    [0]
+        block[0]        [count]    [0] = block[count]    [w-1]      [3]
+        block[count]    [w-1]      [3] = block[0]        [w-1-count][1]
+        block[0]        [w-1-count][1] = block[v-1-count][w-1]      [2]
+        block[v-1-count][w-1]      [2] = subs
+  
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[0]         [ecount]    [4]
+        block[0]         [ecount]    [4] = block[ecount]    [w-1]       [4]
+        block[ecount]    [w-1]       [4] = block[v-1]       [w-1-ecount][4]
+        block[v-1]       [w-1-ecount][4] = block[v-1-ecount][0]         [4]
+        block[v-1-ecount][0]         [4] = subs
+        
+        
+        # *************************************************************************************************  
+  
+  
+def F_(): # done NAT
+    global Cube
+    
+    # edges
+    subs                     = Cube[0][0][1]
+    Cube[0][0][1]      = Cube[1][0][2]
+    Cube[1][0][2]      = Cube[2][0][1]
+    Cube[2][0][1]      = Cube[1][0][0]
+    Cube[1][0][0]      = subs
+
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[0][0][2]
+    Cube[0][0][2]      = Cube[2][0][2]
+    Cube[2][0][2]      = Cube[2][0][0]
+    Cube[2][0][0]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[xPos][0][zPos].xFace
+            Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
+            Cube[xPos][0][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                           = block[v-1-count][w-1]      [2]
+        block[v-1-count][w-1]      [2] = block[0]        [w-1-count][1]
+        block[0]        [w-1-count][1] = block[count]    [w-1]      [3]
+        block[count]    [w-1]      [3] = block[0]        [count]    [0]
+        block[0]        [count]    [0] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[v-1-ecount][0]         [4]
+        block[v-1-ecount][0]         [4] = block[v-1]       [w-1-ecount][4]
+        block[v-1]       [w-1-ecount][4] = block[ecount]    [w-1]       [4]
+        block[ecount]    [w-1]       [4] = block[0]         [ecount]    [4]
+        block[0]         [ecount]    [4] = subs
+     
+        
+    # *************************************************************************************************
+
+
+def F2():
+    F()
+    F()  
+  
+  
+    # *************************************************************************************************
+    
+    
+def B(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[0][2][1]
+    Cube[0][2][1]      = Cube[1][2][2]
+    Cube[1][2][2]      = Cube[2][2][1]
+    Cube[2][2][1]      = Cube[1][2][0]
+    Cube[1][2][0]      = subs
+    
+    # corners
+    subs                     = Cube[0][2][0]
+    Cube[0][2][0]      = Cube[0][2][2]
+    Cube[0][2][2]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[2][2][0]
+    Cube[2][2][0]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[xPos][2][zPos].xFace
+            Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
+            Cube[xPos][2][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                           = block[v-1-count][0]        [2]
+        block[v-1-count][0]        [2] = block[v-1]      [w-1-count][1]
+        block[v-1]      [w-1-count][1] = block[count]    [0]        [3]
+        block[count]    [0]        [3] = block[v-1]      [count]    [0]
+        block[v-1]      [count]    [0] = subs
+    
+  # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[v-1-ecount][0]         [5]
+        block[v-1-ecount][0]         [5] = block[v-1]       [w-1-ecount][5]
+        block[v-1]       [w-1-ecount][5] = block[ecount]    [w-1]       [5]
+        block[ecount]    [w-1]       [5] = block[0]         [ecount]    [5]
+        block[0]         [ecount]    [5] = subs
+     
+        
+    # *************************************************************************************************
+    
+    
+def B_(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[0][2][1]
+    Cube[0][2][1]      = Cube[1][2][0]
+    Cube[1][2][0]      = Cube[2][2][1]
+    Cube[2][2][1]      = Cube[1][2][2]
+    Cube[1][2][2]      = subs
+    
+    # corners
+    subs                     = Cube[0][2][0]
+    Cube[0][2][0]      = Cube[2][2][0]
+    Cube[2][2][0]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[0][2][2]
+    Cube[0][2][2]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for zPos in range(0, 3):
+            subs = Cube[xPos][2][zPos].xFace
+            Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
+            Cube[xPos][2][zPos].zFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                           = block[v-1]      [count]    [0]
+        block[v-1]      [count]    [0] = block[count]    [0]        [3]
+        block[count]    [0]        [3] = block[v-1]      [w-1-count][1]
+        block[v-1]      [w-1-count][1] = block[v-1-count][0]        [2]
+        block[v-1-count][0]        [2] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[0]         [ecount]    [5]
+        block[0]         [ecount]    [5] = block[ecount]    [w-1]       [5]
+        block[ecount]    [w-1]       [5] = block[v-1]       [w-1-ecount][5]
+        block[v-1]       [w-1-ecount][5] = block[v-1-ecount][0]         [5]
+        block[v-1-ecount][0]         [5] = subs
+     
+        
+    # *************************************************************************************************
+    
+    
+def B2():
+    B()
+    B()
+    
+    
+    # *************************************************************************************************
+    
+    
+def U(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[1][0][2]
+    Cube[1][0][2]      = Cube[2][1][2]
+    Cube[2][1][2]      = Cube[1][2][2]
+    Cube[1][2][2]      = Cube[0][1][2]
+    Cube[0][1][2]      = subs
+    
+    # corners
+    subs                     = Cube[0][0][2]
+    Cube[0][0][2]      = Cube[2][0][2]
+    Cube[2][0][2]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[0][2][2]
+    Cube[0][2][2]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for yPos in range(0, 3):
+            subs = Cube[xPos][yPos][2].xFace
+            Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
+            Cube[xPos][yPos][2].yFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                     = block[count]    [w-1][0]
+        block[count]    [w-1][0] = block[count]    [w-1][4]
+        block[count]    [w-1][4] = block[v-1-count][w-1][1]
+        block[v-1-count][w-1][1] = block[v-1-count][w-1][5]
+        block[v-1-count][w-1][5] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[0]         [ecount]    [2]
+        block[0]         [ecount]    [2] = block[v-1-ecount][0]         [2]
+        block[v-1-ecount][0]         [2] = block[v-1]       [w-1-ecount][2]
+        block[v-1]       [w-1-ecount][2] = block[ecount]    [w-1]       [2]
+        block[ecount]    [w-1]       [2] = subs
+        
+        
+    # *************************************************************************************************
+    
+    
+def U_(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[1][0][2]
+    Cube[1][0][2]      = Cube[0][1][2]
+    Cube[0][1][2]      = Cube[1][2][2]
+    Cube[1][2][2]      = Cube[2][1][2]
+    Cube[2][1][2]      = subs
+    
+    # corners
+    subs                     = Cube[0][0][2]
+    Cube[0][0][2]      = Cube[0][2][2]
+    Cube[0][2][2]      = Cube[2][2][2]
+    Cube[2][2][2]      = Cube[2][0][2]
+    Cube[2][0][2]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for yPos in range(0, 3):
+            subs = Cube[xPos][yPos][2].xFace
+            Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
+            Cube[xPos][yPos][2].yFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                     = block[v-1-count][w-1][5]
+        block[v-1-count][w-1][5] = block[v-1-count][w-1][1]
+        block[v-1-count][w-1][1] = block[count]    [w-1][4]
+        block[count]    [w-1][4] = block[count]    [w-1][0]
+        block[count]    [w-1][0] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[ecount]    [w-1]       [2]
+        block[ecount]    [w-1]       [2] = block[v-1]       [w-1-ecount][2]
+        block[v-1]       [w-1-ecount][2] = block[v-1-ecount][0]         [2]
+        block[v-1-ecount][0]         [2] = block[0]         [ecount]    [2]
+        block[0]         [ecount]    [2] = subs
+        
+        
+# *************************************************************************************************
+
+
+def U2():
+    U()
+    U()
+    
+    
+# *************************************************************************************************
+
+
+def D(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[1][0][0]
+    Cube[1][0][0]      = Cube[0][1][0]
+    Cube[0][1][0]      = Cube[1][2][0]
+    Cube[1][2][0]      = Cube[2][1][0]
+    Cube[2][1][0]      = subs
+    
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[0][2][0]
+    Cube[0][2][0]      = Cube[2][2][0]
+    Cube[2][2][0]      = Cube[2][0][0]
+    Cube[2][0][0]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for yPos in range(0, 3):
+            subs = Cube[xPos][yPos][0].xFace
+            Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
+            Cube[xPos][yPos][0].yFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                   = block[v-1-count][0][5]
+        block[v-1-count][0][5] = block[v-1-count][0][1]
+        block[v-1-count][0][1] = block[count]    [0][4]
+        block[count]    [0][4] = block[count]    [0][0]
+        block[count]    [0][0] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                             = block[ecount]    [w-1]       [3]
+        block[ecount]    [w-1]       [3] = block[v-1]       [w-1-ecount][3]
+        block[v-1]       [w-1-ecount][3] = block[v-1-ecount][0]         [3]
+        block[v-1-ecount][0]         [3] = block[0]         [ecount]    [3]
+        block[0]         [ecount]    [3] = subs
+        
+        
+# *************************************************************************************************
+
+
+def D_(): # done NAT
+    global Cube
+
+    # edges
+    subs                     = Cube[1][0][0]
+    Cube[1][0][0]      = Cube[2][1][0]
+    Cube[2][1][0]      = Cube[1][2][0]
+    Cube[1][2][0]      = Cube[0][1][0]
+    Cube[0][1][0]      = subs
+    
+    # corners
+    subs                     = Cube[0][0][0]
+    Cube[0][0][0]      = Cube[2][0][0]
+    Cube[2][0][0]      = Cube[2][2][0]
+    Cube[2][2][0]      = Cube[0][2][0]
+    Cube[0][2][0]      = subs
+    
+    # orientation
+    for xPos in range(0, 3):
+        for yPos in range(0, 3):
+            subs = Cube[xPos][yPos][0].xFace
+            Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
+            Cube[xPos][yPos][0].yFace = subs
+    
+    # visual movement
+    
+    for count in range(0, w):
+        subs                   = block[count]    [0][0]
+        block[count]    [0][0] = block[count]    [0][4]
+        block[count]    [0][4] = block[v-1-count][0][1]
+        block[v-1-count][0][1] = block[v-1-count][0][5]
+        block[v-1-count][0][5] = subs
+
+    # corners
+    for ecount in range(0, w - 1):
+        subs                              = block[0]         [ecount]    [3]
+        block[0]         [ecount]    [3] = block[v-1-ecount][0]         [3]
+        block[v-1-ecount][0]         [3] = block[v-1]       [w-1-ecount][3]
+        block[v-1]       [w-1-ecount][3] = block[ecount]    [w-1]       [3]
+        block[ecount]    [w-1]       [3] = subs
+        
+        
+    # *************************************************************************************************
+    
+    
+def D2():
+    D()
+    D()
+    
+    
+    # *************************************************************************************************
