@@ -9,20 +9,11 @@ import random
 
 numSides = 3 # the number of sides 
 blockSize = 240 / numSides # the size of one piece
-blockColorSize = blockSize * .9 # the size of the color in proportion
+blockColorSize = blockSize * .75 # the size of the color in proportion
 viewState = 'locked' # for the toggleable camera
 w = 3
 v = 3
 colors = 6
-
-cubeX = 0. # these are used for offsetting the visual cube if there is a cube rotation
-cubeY = 0.
-cubeZ = 0.
-
-cubeOffsetX = (PI / 2) * cubeX # i have these here instead of in the rotate part bc python is dumb
-cubeOffsetY = (PI / 2) * cubeY # it just doesnt work if you put this in the rotate part
-cubeOffsetZ = (PI / 2) * cubeZ # gives you a 'no + operater between NoneType & Float'
-
 
 class Block(object): # block
 
@@ -33,6 +24,8 @@ class Block(object): # block
         self.xFace = xFace
         self.yFace = yFace
         self.zFace = zFace
+        
+        
 """ i use a pseudo-tracking method to keep track of the blocks, by creating the cube solved, 
 the cube always starts in the same state, i just make sure to adjust the value of
 the block so that they match the actual cube """
@@ -112,41 +105,30 @@ def setup(): # this only runs once
         for m in range(0, w):
             for n in range(0, colors):
                 block[l][m][n] = n
-
-    
-# *************************************************************************************************
     
     
-def transferVariables(num): # this only runs once
-    global Cube
-    
-    if num == '1':
-        return Cube
-
-    
-        
 # *************************************************************************************************
 
 
 def draw():
-    
     background(100, 100, 150) # background color
-    fill(255)
-    stroke(0)
     translate(width / 2, height / 2) # moves the cube so its actually in the frame
-    
-    # sets the default locked camera angle
-    rotateX((3 * PI / 4) + (PI / 16) + cubeOffsetX) # in this, the cube is set to a default position, which is + PI / 2 off normal
-    rotateY((3 * PI / 4) + (PI / 16) + cubeOffsetY) # the cube offset accounts for any rotations, like X or X_
-    rotateZ(cubeOffsetZ) # offsetting!
+    fill(255)
     
     if viewState == 'free': # if its free, the camera follows the mouse
         rotateX(-mouseY * PI / 300)
         rotateY(mouseX * PI / 300)
+    else:
+        rotateX((3 * PI / 4) + (PI / 16)) # the cube is set to a default position, which is + PI / 2 off normal
+        rotateY((3 * PI / 4) + (PI / 16))
+
+    createCubeVisual()
 
     
-    box(239) # creates a box
+    # *************************************************************************************************
     
+    
+def createCubeVisual():        
     for l in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
         for m in range(0, 3): # they run through and create all of the colors needed at the correct positions
             for n in range(0, 6):
@@ -190,8 +172,8 @@ def draw():
                     colored(block[l][m][n])
                     rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                    
    
+         
      # *************************************************************************************************
     
     
@@ -270,6 +252,19 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         test_ori()
     elif key == ' ':
         applyScramble()
+    elif key == 'm':
+        M()
+    elif key == 'M':
+        M_()
+    elif key == 's':
+        S()
+    elif key == 'S':
+        S_()
+    elif key == 'e':
+        E()
+    elif key == 'E':
+        E_()
+        
 
 
     # *************************************************************************************************
@@ -998,7 +993,7 @@ def M_(): # NAT NVT
 
     # visual movement
     
-    for count in range(0, 3)
+    for count in range(0, 3):
       subs =                   block[1][count]    [2]
       block[1][count]    [2] = block[1][w-1-count][4]
       block[1][w-1-count][4] = block[1][w-1-count][3]
