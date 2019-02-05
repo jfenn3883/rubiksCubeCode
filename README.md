@@ -6,10 +6,10 @@ A Processing.py sketch that visualizes, then (hopefully) solves a 3x3x3 Rubiks C
 
 The Goals Of This Program Are To:
 
-- [ ] visualize a rubiks cube
-- [ ] move according to user inputs
-- [ ] track/retrieve current state of the cube using a 3-D array
-- [ ] generate and apply a random scramble
+- [X] visualize a rubiks cube
+- [X] move according to user inputs
+- [X] track/retrieve current state of the cube using a 3-D array
+- [X] generate and apply a random scramble
 - [ ] have every single, double, and cube rotation move available 
 - [ ] be able to solve the cube consistantly
 - [ ] export a string containing the scramble and solve moveset
