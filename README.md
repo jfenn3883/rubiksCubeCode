@@ -23,6 +23,7 @@ The Goals Of This Program Are To:
     - [ ] taking unnessasary code out of the draw() function
     - [ ] eliminating variables that are unused or can be implemented better
     - [ ] adding a quick solve or lowest move option to change between different methods
+- [ ] link the Cube array to the visuals so you can directly map things to the visual cube
 - [ ] take the scramble and solve moveset and apply it to a real life cube
 - [ ] implement cameras to sense color to solve the cube from any state
 - [ ] a very long term goal is to see how Deep Learning reacts to solving the cube
