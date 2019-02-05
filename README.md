@@ -10,7 +10,7 @@ The Goals Of This Program Are To:
 - [X] move according to user inputs
 - [X] track/retrieve current state of the cube using a 3-D array
 - [X] generate and apply a random scramble
-- [ ] have every single, double, and cube rotation move available 
+- [X] have every single, double, and cube rotation move available 
 - [ ] be able to solve the cube consistantly
 - [ ] export a string containing the scramble and solve moveset
 - [ ] improve efficiency of solves
