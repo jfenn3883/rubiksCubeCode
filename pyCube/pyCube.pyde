@@ -11,9 +11,9 @@ numSides = 3 # the number of sides
 blockSize = 240 / numSides # the size of one piece
 blockColorSize = blockSize * .75 # the size of the color in proportion
 viewState = 'locked' # for the toggleable camera
-w = 3
-v = 3
-colors = 6
+w = numSides # these are equal to 3
+v = numSides
+# i removed a variable called colors here and made it a list down, not sure if i need it
 
 class Block(object): # block
 
@@ -90,9 +90,9 @@ colors = ['blue', 'green', 'white', 'yellow', 'red', 'orange']
 
 block = [ # so the cube rotation works!
 [
-[colors, colors, colors]
-[colors, colors, colors]
-[colors, colors, colors]    
+[colors, colors, colors],
+[colors, colors, colors],
+[colors, colors, colors]   
 ]
     
     
@@ -105,10 +105,10 @@ def setup(): # this only runs once
     strokeWeight(5)
     noFill()
     rectMode(CENTER)
-    for l in range(0, v):
-        for m in range(0, w):
-            for n in range(0, colors):
-                block[l][m][n] = n
+    for l in range(0, v): # not 100 % sure what this does
+        for m in range(0, w): # im not sure this is even needed
+            for n in range(0, colors): # but i cannot test it right now
+                block[l][m][n] = n # so bipity boopity bo
     
     
 # *************************************************************************************************
@@ -133,48 +133,48 @@ def draw():
     
     
 def createCubeVisual():        
-    for l in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
-        for m in range(0, 3): # they run through and create all of the colors needed at the correct positions
+    for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
+        for y in range(0, 3): # they run through and create all of the colors needed at the correct positions
             for color in colors:
                 if color == 'blue': # blue
-                    pushMatrix()
-                    translate(3 * blockSize / 2, 0, 0)
-                    rotateY(PI/2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 +.5), blockColorSize, blockColorSize)
-                    popMatrix()
+                    pushMatrix() # setup
+                    translate(3 * blockSize / 2, 0, 0) # moving the cube to the right pos according to loop
+                    rotateY(PI/2) # rotating it so the face its adding is the correct color
+                    colored(block[x][y][color]) # actually creates the color using a fill command
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) # creates the 
+                    popMatrix() # undoing setup
                 if color == 'green': # green
                     pushMatrix()
                     translate(-3 * blockSize / 2, 0, 0)
                     rotateY(PI/2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    colored(block[x][y][color])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
                 if color == 'white': # white
                     pushMatrix()
                     translate(0, 3 * blockSize / 2, 0)
                     rotateX(PI/2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    colored(block[x][y][color])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
                 if color == 'yellow': # yellow
                     pushMatrix()
                     translate(0, -3 * blockSize / 2, 0)
                     rotateX(PI/2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    colored(block[x][y][color])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
                 if color == 'red': # red
                     pushMatrix()
                     translate(0, 0, 3 * blockSize / 2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+                    colored(block[x][y][color])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
                     popMatrix()
                 if color == 'orange': # orange
                     pushMatrix()
                     translate(0, 0, -3 * blockSize / 2)
-                    colored(block[l][m][n])
-                    rect(blockSize * (l - 3 / 2.0 + .5), blockSize * (m - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    colored(block[x][y][color])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
    
          
@@ -301,22 +301,21 @@ def applyScramble():
     
     # *************************************************************************************************
     
-    
+    # NOTE: i may be able to put this in a easier to understand format in the createCubeVisual() function
 def colored(c): # handles painting the colors
-  if c == 0:
+  if c == 'green':
     fill(0, 150, 0) # green
-  if c == 1:
+  if c == 'blue':
     fill(0, 100, 255) # blue
-  if c == 2:
+  if c == 'yellow':
     fill(200, 200, 0) # yellow
-  if c == 3:
+  if c == 'white':
     fill(200) # white
-  if c == 4:
+  if c == 'orange':
     fill(255, 150, 0) # orange
-  if c == 5:
+  if c == 'red':
     fill(255, 40, 40) # red
-  if c == 6:
-    fill(150)
+# i removed a if == 6 because im not sure it ever ran (fill(150))
     
     
     # *************************************************************************************************
