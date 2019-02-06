@@ -88,11 +88,27 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
     
 colors = ['blue', 'green', 'white', 'yellow', 'red', 'orange']
 
-block = [ # so the cube rotation works!
+block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
 [
-[colors, colors, colors],
-[colors, colors, colors],
-[colors, colors, colors]   
+
+[
+[Cube[2][0][0].xFace, Cube[0][0][0].xFace, Cube[0][2][0].zFace, Cube[0][2][2].zFace, Cube[2][2][0].yFace, Cube[2][0][0].yFace], 
+[Cube[2][1][0].xFace, Cube[0][1][0].xFace, Cube[1][2][0].zFace, Cube[1][2][2].zFace, Cube[1][2][0].yFace, Cube[1][0][0].yFace], 
+[Cube[2][2][0].xFace, Cube[0][2][0].xFace, Cube[2][2][0].zFace, Cube[2][2][2].zFace, Cube[0][2][0].yFace, Cube[0][0][0].yFace]
+],
+
+[
+[Cube[2][0][1].xFace, Cube[0][0][1].xFace, Cube[0][1][0].zFace, Cube[0][1][2].zFace, Cube[2][2][1].yFace, Cube[2][0][1].yFace], 
+[Cube[2][1][1].xFace, Cube[0][1][1].xFace, Cube[1][1][0].zFace, Cube[1][1][2].zFace, Cube[1][2][1].yFace, Cube[1][0][1].yFace], 
+[Cube[2][2][1].xFace, Cube[0][2][1].xFace, Cube[2][1][0].zFace, Cube[2][1][2].zFace, Cube[0][2][1].yFace, Cube[0][0][1].yFace]
+],
+
+[
+[Cube[2][0][2].xFace, Cube[0][0][2].xFace, Cube[0][0][0].zFace, Cube[0][0][2].zFace, Cube[2][2][2].yFace, Cube[2][0][2].yFace], 
+[Cube[2][1][2].xFace, Cube[0][1][2].xFace, Cube[1][0][0].zFace, Cube[1][0][2].zFace, Cube[1][2][2].yFace, Cube[1][0][2].yFace], 
+[Cube[2][2][2].xFace, Cube[0][2][2].xFace, Cube[2][0][0].zFace, Cube[2][0][2].zFace, Cube[0][2][2].yFace, Cube[0][0][2].yFace]
+]   
+
 ]
     
     
@@ -135,42 +151,42 @@ def draw():
 def createCubeVisual():        
     for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
         for y in range(0, 3): # they run through and create all of the colors needed at the correct positions
-            for color in colors:
-                if color == 'blue': # blue
+            for color in range(0, 6): # runs through the colors
+                if block[x][y][color] == 'blue': # the block referances the color of the specific block and face 
                     pushMatrix() # setup
                     translate(3 * blockSize / 2, 0, 0) # moving the cube to the right pos according to loop
                     rotateY(PI/2) # rotating it so the face its adding is the correct color
                     colored(block[x][y][color]) # actually creates the color using a fill command
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) # creates the 
                     popMatrix() # undoing setup
-                if color == 'green': # green
+                if block[x][y][color] == 'green': # green
                     pushMatrix()
                     translate(-3 * blockSize / 2, 0, 0)
                     rotateY(PI/2)
                     colored(block[x][y][color])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if color == 'white': # white
+                if block[x][y][color] == 'white': # white
                     pushMatrix()
                     translate(0, 3 * blockSize / 2, 0)
                     rotateX(PI/2)
                     colored(block[x][y][color])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if color == 'yellow': # yellow
+                if block[x][y][color] == 'yellow': # yellow
                     pushMatrix()
                     translate(0, -3 * blockSize / 2, 0)
                     rotateX(PI/2)
                     colored(block[x][y][color])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if color == 'red': # red
+                if block[x][y][color] == 'red': # red
                     pushMatrix()
                     translate(0, 0, 3 * blockSize / 2)
                     colored(block[x][y][color])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
                     popMatrix()
-                if color == 'orange': # orange
+                if block[x][y][color] == 'orange': # orange
                     pushMatrix()
                     translate(0, 0, -3 * blockSize / 2)
                     colored(block[x][y][color])
