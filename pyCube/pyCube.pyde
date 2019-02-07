@@ -86,31 +86,6 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 [ white_blue, blue_, yellow_blue ],
 [ white_red_blue, red_blue, yellow_red_blue ]]]
     
-colors = ['blue', 'green', 'white', 'yellow', 'red', 'orange']
-
-block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
-[
-
-[
-[Cube[2][0][0].xFace, Cube[0][0][0].xFace, Cube[0][2][0].zFace, Cube[0][2][2].zFace, Cube[2][2][0].yFace, Cube[2][0][0].yFace], 
-[Cube[2][1][0].xFace, Cube[0][1][0].xFace, Cube[1][2][0].zFace, Cube[1][2][2].zFace, Cube[1][2][0].yFace, Cube[1][0][0].yFace], 
-[Cube[2][2][0].xFace, Cube[0][2][0].xFace, Cube[2][2][0].zFace, Cube[2][2][2].zFace, Cube[0][2][0].yFace, Cube[0][0][0].yFace]
-],
-
-[
-[Cube[2][0][1].xFace, Cube[0][0][1].xFace, Cube[0][1][0].zFace, Cube[0][1][2].zFace, Cube[2][2][1].yFace, Cube[2][0][1].yFace], 
-[Cube[2][1][1].xFace, Cube[0][1][1].xFace, Cube[1][1][0].zFace, Cube[1][1][2].zFace, Cube[1][2][1].yFace, Cube[1][0][1].yFace], 
-[Cube[2][2][1].xFace, Cube[0][2][1].xFace, Cube[2][1][0].zFace, Cube[2][1][2].zFace, Cube[0][2][1].yFace, Cube[0][0][1].yFace]
-],
-
-[
-[Cube[2][0][2].xFace, Cube[0][0][2].xFace, Cube[0][0][0].zFace, Cube[0][0][2].zFace, Cube[2][2][2].yFace, Cube[2][0][2].yFace], 
-[Cube[2][1][2].xFace, Cube[0][1][2].xFace, Cube[1][0][0].zFace, Cube[1][0][2].zFace, Cube[1][2][2].yFace, Cube[1][0][2].yFace], 
-[Cube[2][2][2].xFace, Cube[0][2][2].xFace, Cube[2][0][0].zFace, Cube[2][0][2].zFace, Cube[0][2][2].yFace, Cube[0][0][2].yFace]
-]   
-
-]
-    
     
     # *************************************************************************************************
     
@@ -121,11 +96,7 @@ def setup(): # this only runs once
     strokeWeight(5)
     noFill()
     rectMode(CENTER)
-    for l in range(0, v): # not 100 % sure what this does
-        for m in range(0, w): # im not sure this is even needed
-            for n in range(0, colors): # but i cannot test it right now
-                block[l][m][n] = n # so bipity boopity bo
-    
+
     
 # *************************************************************************************************
 
@@ -143,53 +114,96 @@ def draw():
         rotateY((3 * PI / 4) + (PI / 16))
 
     createCubeVisual()
-
+    
     
     # *************************************************************************************************
     
     
 def createCubeVisual():        
-    for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
-        for y in range(0, 3): # they run through and create all of the colors needed at the correct positions
-            for color in range(0, 6): # runs through the colors
-                if block[x][y][color] == 'blue': # the block referances the color of the specific block and face 
+    global Cube
+
+    
+    block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
+
+[ # orange
+[Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
+[Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
+[Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
+],
+
+[ # red
+[Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
+[Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
+[Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
+],
+
+[ # green
+[Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
+[Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
+[Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
+],   
+    
+[ # blue
+[Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
+[Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
+[Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
+],
+
+[ # yellow
+[Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
+[Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
+[Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
+],
+
+[ # white
+[Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
+[Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
+[Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
+]
+      
+]
+    for colors in range(0, 6): # runs through the colors
+        for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
+            for y in range(0, 3): # they run through and create all of the colors needed at the correct positionsr
+                if block[colors][x][y] == 'blue': # the block referances the color of the specific block and face 
                     pushMatrix() # setup
-                    translate(3 * blockSize / 2, 0, 0) # moving the cube to the right pos according to loop
+                    translate(-3 * blockSize / 2, 0, 0) # moving the cube to the right pos according to loop
                     rotateY(PI/2) # rotating it so the face its adding is the correct color
-                    colored(block[x][y][color]) # actually creates the color using a fill command
+                    colored(block[colors][x][y]) # actually creates the color using a fill command
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) # creates the 
                     popMatrix() # undoing setup
-                if block[x][y][color] == 'green': # green
+                if block[colors][x][y] == 'green': # green
                     pushMatrix()
-                    translate(-3 * blockSize / 2, 0, 0)
-                    rotateY(PI/2)
-                    colored(block[x][y][color])
+                    translate(3 * blockSize / 2, 0, 0)
+                    rotateY(-PI/2)
+                    colored(block[colors][x][y])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if block[x][y][color] == 'white': # white
-                    pushMatrix()
-                    translate(0, 3 * blockSize / 2, 0)
-                    rotateX(PI/2)
-                    colored(block[x][y][color])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
-                    popMatrix()
-                if block[x][y][color] == 'yellow': # yellow
+                if block[colors][x][y] == 'white': # white
                     pushMatrix()
                     translate(0, -3 * blockSize / 2, 0)
                     rotateX(PI/2)
-                    colored(block[x][y][color])
+                    colored(block[colors][x][y])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if block[x][y][color] == 'red': # red
+                if block[colors][x][y] == 'yellow': # yellow
                     pushMatrix()
-                    translate(0, 0, 3 * blockSize / 2)
-                    colored(block[x][y][color])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+                    translate(0, 3 * blockSize / 2, 0)
+                    rotateX(-PI/2)
+                    colored(block[colors][x][y])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
-                if block[x][y][color] == 'orange': # orange
+                if block[colors][x][y] == 'red': # red
                     pushMatrix()
                     translate(0, 0, -3 * blockSize / 2)
-                    colored(block[x][y][color])
+                    colored(block[colors][x][y])
+                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+                    popMatrix()
+                if block[colors][x][y] == 'orange': # orange
+                    pushMatrix()
+                    translate(0, 0, 3 * blockSize / 2)
+                    rotateZ(PI)
+                    colored(block[colors][x][y])
                     rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
                     popMatrix()
    
@@ -379,25 +393,6 @@ def R(): # done
             subs = Cube[2][yPos][zPos].yFace
             Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
             Cube[2][yPos][zPos].zFace = subs
-
-
-
-    # visual movement
-    
-    for count in range(0, w):
-        subs =                   block[0][count]    [2]
-        block[0][count]    [2] = block[0][w-1-count][4]
-        block[0][w-1-count][4] = block[0][w-1-count][3]
-        block[0][w-1-count][3] = block[0][count]    [5]
-        block[0][count]    [5] = subs
-    
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[v-1]       [ecount]    [1]
-        block[v-1]       [ecount]    [1] = block[v-1-ecount][w-1]       [1]
-        block[v-1-ecount][w-1]       [1] = block[0]         [w-1-ecount][1]
-        block[0]         [w-1-ecount][1] = block[ecount]    [0]         [1]
-        block[ecount]    [0]         [1] = subs
                            
           
   # *************************************************************************************************  
@@ -426,23 +421,6 @@ def R_(): # done
             subs = Cube[2][yPos][zPos].yFace
             Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
             Cube[2][yPos][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                   = block[0][count]    [5]
-        block[0][count]    [5] = block[0][w-1-count][3]
-        block[0][w-1-count][3] = block[0][w-1-count][4]
-        block[0][w-1-count][4] = block[0][count]    [2]
-        block[0][count]    [2] = subs
-  
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[ecount]    [0]         [1]
-        block[ecount]    [0]         [1] = block[0]         [w-1-ecount][1]
-        block[0]         [w-1-ecount][1] = block[v-1-ecount][w-1]       [1]
-        block[v-1-ecount][w-1]       [1] = block[v-1]       [ecount]    [1]
-        block[v-1]       [ecount]    [1] = subs
     
     
     # *************************************************************************************************
@@ -480,24 +458,6 @@ def L(): # done
             Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
             Cube[0][yPos][zPos].zFace = subs
     
-    # visual movement
-    
-    for count in range(0, w):
-        subs                     = block[v-1][count]    [5]
-        block[v-1][count]    [5] = block[v-1][w-1-count][3]
-        block[v-1][w-1-count][3] = block[v-1][w-1-count][4]
-        block[v-1][w-1-count][4] = block[v-1][count]    [2]
-        block[v-1][count]    [2] = subs
-  
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[ecount]    [0]         [0]
-        block[ecount]    [0]         [0] = block[0]         [w-1-ecount][0]
-        block[0]         [w-1-ecount][0] = block[v-1-ecount][w-1]       [0]
-        block[v-1-ecount][w-1]       [0] = block[v-1]       [ecount]    [0]
-        block[v-1]       [ecount]    [0] = subs
-  
-  
   
   # *************************************************************************************************  
   
@@ -525,22 +485,6 @@ def L_(): # done
             subs = Cube[0][yPos][zPos].yFace
             Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
             Cube[0][yPos][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w): # edges
-        subs                              = block[v-1][count][2]
-        block[v-1][count]    [2]          = block[v-1][w-1-count][4]
-        block[v-1][w-1-count][4]          = block[v-1][w-1-count][3]
-        block[v-1][w-1-count][3]          = block[v-1][count]    [5]
-        block[v-1][count]    [5]          = subs
-        
-    for ecount in range(0, w - 1): # corners
-        subs                              = block[v-1]       [ecount]    [0]
-        block[v-1]       [ecount]    [0]  = block[v-1-ecount][w-1]       [0]
-        block[v-1-ecount][w-1]       [0]  = block[0]         [w-1-ecount][0]
-        block[0]         [w-1-ecount][0]  = block[ecount]    [0]         [0]
-        block[ecount]    [0]         [0]  = subs
         
         
     # *************************************************************************************************  
@@ -577,23 +521,6 @@ def F(): # done
             subs = Cube[xPos][0][zPos].xFace
             Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
             Cube[xPos][0][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                           = block[0]        [count]    [0]
-        block[0]        [count]    [0] = block[count]    [w-1]      [3]
-        block[count]    [w-1]      [3] = block[0]        [w-1-count][1]
-        block[0]        [w-1-count][1] = block[v-1-count][w-1]      [2]
-        block[v-1-count][w-1]      [2] = subs
-  
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[0]         [ecount]    [4]
-        block[0]         [ecount]    [4] = block[ecount]    [w-1]       [4]
-        block[ecount]    [w-1]       [4] = block[v-1]       [w-1-ecount][4]
-        block[v-1]       [w-1-ecount][4] = block[v-1-ecount][0]         [4]
-        block[v-1-ecount][0]         [4] = subs
         
         
         # *************************************************************************************************  
@@ -622,23 +549,6 @@ def F_(): # done
             subs = Cube[xPos][0][zPos].xFace
             Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
             Cube[xPos][0][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                           = block[v-1-count][w-1]      [2]
-        block[v-1-count][w-1]      [2] = block[0]        [w-1-count][1]
-        block[0]        [w-1-count][1] = block[count]    [w-1]      [3]
-        block[count]    [w-1]      [3] = block[0]        [count]    [0]
-        block[0]        [count]    [0] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[v-1-ecount][0]         [4]
-        block[v-1-ecount][0]         [4] = block[v-1]       [w-1-ecount][4]
-        block[v-1]       [w-1-ecount][4] = block[ecount]    [w-1]       [4]
-        block[ecount]    [w-1]       [4] = block[0]         [ecount]    [4]
-        block[0]         [ecount]    [4] = subs
      
         
     # *************************************************************************************************
@@ -676,23 +586,6 @@ def B(): # done
             Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
             Cube[xPos][2][zPos].zFace = subs
     
-    # visual movement
-    
-    for count in range(0, w):
-        subs                           = block[v-1-count][0]        [2]
-        block[v-1-count][0]        [2] = block[v-1]      [w-1-count][1]
-        block[v-1]      [w-1-count][1] = block[count]    [0]        [3]
-        block[count]    [0]        [3] = block[v-1]      [count]    [0]
-        block[v-1]      [count]    [0] = subs
-    
-  # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[v-1-ecount][0]         [5]
-        block[v-1-ecount][0]         [5] = block[v-1]       [w-1-ecount][5]
-        block[v-1]       [w-1-ecount][5] = block[ecount]    [w-1]       [5]
-        block[ecount]    [w-1]       [5] = block[0]         [ecount]    [5]
-        block[0]         [ecount]    [5] = subs
-     
         
     # *************************************************************************************************
     
@@ -721,23 +614,6 @@ def B_(): # done
             Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
             Cube[xPos][2][zPos].zFace = subs
     
-    # visual movement
-    
-    for count in range(0, w):
-        subs                           = block[v-1]      [count]    [0]
-        block[v-1]      [count]    [0] = block[count]    [0]        [3]
-        block[count]    [0]        [3] = block[v-1]      [w-1-count][1]
-        block[v-1]      [w-1-count][1] = block[v-1-count][0]        [2]
-        block[v-1-count][0]        [2] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[0]         [ecount]    [5]
-        block[0]         [ecount]    [5] = block[ecount]    [w-1]       [5]
-        block[ecount]    [w-1]       [5] = block[v-1]       [w-1-ecount][5]
-        block[v-1]       [w-1-ecount][5] = block[v-1-ecount][0]         [5]
-        block[v-1-ecount][0]         [5] = subs
-     
         
     # *************************************************************************************************
     
@@ -773,23 +649,6 @@ def U(): # done
             subs = Cube[xPos][yPos][2].xFace
             Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
             Cube[xPos][yPos][2].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                     = block[count]    [w-1][0]
-        block[count]    [w-1][0] = block[count]    [w-1][4]
-        block[count]    [w-1][4] = block[v-1-count][w-1][1]
-        block[v-1-count][w-1][1] = block[v-1-count][w-1][5]
-        block[v-1-count][w-1][5] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[0]         [ecount]    [2]
-        block[0]         [ecount]    [2] = block[v-1-ecount][0]         [2]
-        block[v-1-ecount][0]         [2] = block[v-1]       [w-1-ecount][2]
-        block[v-1]       [w-1-ecount][2] = block[ecount]    [w-1]       [2]
-        block[ecount]    [w-1]       [2] = subs
         
         
     # *************************************************************************************************
@@ -818,23 +677,6 @@ def U_(): # done
             subs = Cube[xPos][yPos][2].xFace
             Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
             Cube[xPos][yPos][2].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                     = block[v-1-count][w-1][5]
-        block[v-1-count][w-1][5] = block[v-1-count][w-1][1]
-        block[v-1-count][w-1][1] = block[count]    [w-1][4]
-        block[count]    [w-1][4] = block[count]    [w-1][0]
-        block[count]    [w-1][0] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[ecount]    [w-1]       [2]
-        block[ecount]    [w-1]       [2] = block[v-1]       [w-1-ecount][2]
-        block[v-1]       [w-1-ecount][2] = block[v-1-ecount][0]         [2]
-        block[v-1-ecount][0]         [2] = block[0]         [ecount]    [2]
-        block[0]         [ecount]    [2] = subs
         
         
 # *************************************************************************************************
@@ -871,23 +713,6 @@ def D(): # done
             subs = Cube[xPos][yPos][0].xFace
             Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
             Cube[xPos][yPos][0].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                   = block[v-1-count][0][5]
-        block[v-1-count][0][5] = block[v-1-count][0][1]
-        block[v-1-count][0][1] = block[count]    [0][4]
-        block[count]    [0][4] = block[count]    [0][0]
-        block[count]    [0][0] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                             = block[ecount]    [w-1]       [3]
-        block[ecount]    [w-1]       [3] = block[v-1]       [w-1-ecount][3]
-        block[v-1]       [w-1-ecount][3] = block[v-1-ecount][0]         [3]
-        block[v-1-ecount][0]         [3] = block[0]         [ecount]    [3]
-        block[0]         [ecount]    [3] = subs
         
         
 # *************************************************************************************************
@@ -916,23 +741,6 @@ def D_(): # done
             subs = Cube[xPos][yPos][0].xFace
             Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
             Cube[xPos][yPos][0].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, w):
-        subs                   = block[count]    [0][0]
-        block[count]    [0][0] = block[count]    [0][4]
-        block[count]    [0][4] = block[v-1-count][0][1]
-        block[v-1-count][0][1] = block[v-1-count][0][5]
-        block[v-1-count][0][5] = subs
-
-    # corners
-    for ecount in range(0, w - 1):
-        subs                              = block[0]         [ecount]    [3]
-        block[0]         [ecount]    [3] = block[v-1-ecount][0]         [3]
-        block[v-1-ecount][0]         [3] = block[v-1]       [w-1-ecount][3]
-        block[v-1]       [w-1-ecount][3] = block[ecount]    [w-1]       [3]
-        block[ecount]    [w-1]       [3] = subs
         
         
     # *************************************************************************************************
@@ -970,15 +778,6 @@ def M(): # NAT NVT
             Cube[1][yPos][zPos].yFace = Cube[1][yPos][zPos].zFace
             Cube[1][yPos][zPos].zFace = subs
     
-    # visual movement
-    
-    for count in range(0, 3):
-      subs                   = block[0][count]    [5];
-      block[0][count]    [5] = block[0][w-1-count][3];
-      block[0][w-1-count][3] = block[0][w-1-count][4];
-      block[0][w-1-count][4] = block[0][count]    [2];
-      block[0][count]    [2] = subs
-    
     
     # *************************************************************************************************
 
@@ -1007,17 +806,6 @@ def M_(): # NAT NVT
             subs = Cube[1][yPos][zPos].yFace
             Cube[1][yPos][zPos].yFace = Cube[1][yPos][zPos].zFace
             Cube[1][yPos][zPos].zFace = subs
-
-
-
-    # visual movement
-    
-    for count in range(0, 3):
-      subs =                   block[1][count]    [2]
-      block[1][count]    [2] = block[1][w-1-count][4]
-      block[1][w-1-count][4] = block[1][w-1-count][3]
-      block[1][w-1-count][3] = block[1][count]    [5]
-      block[1][count]    [5] = subs
                           
           
   # *************************************************************************************************  
@@ -1054,15 +842,6 @@ def E(): # NAT NVT
             subs = Cube[xPos][yPos][1].xFace
             Cube[xPos][yPos][1].xFace = Cube[xPos][yPos][1].yFace
             Cube[xPos][yPos][1].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, 3):
-      subs                     = block[count]    [w-2][0]
-      block[count]    [w-2][0] = block[count]    [w-2][4]
-      block[count]    [w-2][4] = block[v-1-count][w-2][1]
-      block[v-1-count][w-2][1] = block[v-1-count][w-2][5]
-      block[v-1-count][w-2][5] = subs
 
 
     # *************************************************************************************************
@@ -1091,15 +870,6 @@ def E_(): # NAT NVT
             subs = Cube[xPos][yPos][1].xFace
             Cube[xPos][yPos][1].xFace = Cube[xPos][yPos][1].yFace
             Cube[xPos][yPos][1].yFace = subs
-    
-    # visual movement
-    
-    for count in range(0, 3):
-      subs                     = block[v-1-count][w-2][5]
-      block[v-1-count][w-2][5] = block[v-1-count][w-2][1]
-      block[v-1-count][w-2][1] = block[count]    [w-2][4]
-      block[count]    [w-2][4] = block[count]    [w-2][0]
-      block[count]    [w-2][0] = subs
         
         
     # *************************************************************************************************
@@ -1136,15 +906,6 @@ def S(): # NAT NVT
             subs = Cube[xPos][1][zPos].xFace
             Cube[xPos][1][zPos].xFace = Cube[xPos][1][zPos].zFace
             Cube[xPos][1][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, 3):
-      subs                           = block[1]        [count]    [0]
-      block[1]        [count]    [0] = block[count]    [w-2]      [3]
-      block[count]    [w-2]      [3] = block[1]        [w-1-count][1]
-      block[1]        [w-1-count][1] = block[v-1-count][w-2]      [2]
-      block[v-1-count][w-2]      [2] = subs
         
         
         # *************************************************************************************************  
@@ -1173,15 +934,6 @@ def S_():
             subs = Cube[xPos][1][zPos].xFace
             Cube[xPos][1][zPos].xFace = Cube[xPos][1][zPos].zFace
             Cube[xPos][1][zPos].zFace = subs
-    
-    # visual movement
-    
-    for count in range(0, 3):
-      subs                           = block[v-1-count][w-2]      [2]
-      block[v-1-count][w-2]      [2] = block[1]        [w-1-count][1]
-      block[1]        [w-1-count][1] = block[count]    [w-2]      [3]
-      block[count]    [w-2]      [3] = block[1]        [count]    [0]
-      block[1]        [count]    [0] = subs
      
         
     # *************************************************************************************************
@@ -1211,7 +963,7 @@ def r_(): # NAT NVT
     # *************************************************************************************************
 
     
-    def r2(): # NAT NVT
+def r2(): # NAT NVT
     r()
     r()
     
@@ -1235,7 +987,7 @@ def l_(): # NAT NVT
     # *************************************************************************************************
 
     
- def l2(): # NAT NVT
+def l2(): # NAT NVT
     l()
     l()
 
@@ -1402,7 +1154,7 @@ def Z_(): # NAT NVT
     # *************************************************************************************************
     
     
-    def Z2(): # NAT NVT
+def Z2(): # NAT NVT
     Z()
     Z()
 
