@@ -218,7 +218,22 @@ def createCubeVisual():
                     popMatrix()
                 if face == 2: # yellow
                     pushMatrix()
-                    
+                    rotateX(-PI / 2)
+                    colorFaces(face, x, y)
+                    popMatrix()
+                if face == 3: # red
+                    pushMatrix()
+                    rotateY(PI)
+                    colorFaces(face, x, y)
+                    popMatrix()
+                if face == 4: # blue
+                    pushMatrix()
+                    rotateY(-PI / 2)
+                    colorFaces(face, x, y)
+                    popMatrix()
+                if face == 5: # white
+                    pushMatrix()
+                    rotateX(PI / 2)
                     colorFaces(face, x, y)
                     popMatrix()
                 
@@ -237,15 +252,15 @@ def colorFaces(face, x, y):
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
     if block[face][x][y] == 'yellow': # white
-        translate(0, -3 * blockSize / 2, 0)
+        translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
     if block[face][x][y] == 'red': # yellow
-        translate(0, 3 * blockSize / 2, 0)
+        translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
     if block[face][x][y] == 'blue': # red
-        translate(0, 0, -3 * blockSize / 2)
+        translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
     if block[face][x][y] == 'white': # orange
