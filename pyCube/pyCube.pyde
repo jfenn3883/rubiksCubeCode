@@ -86,6 +86,46 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 [ white_blue, blue_, yellow_blue ],
 [ white_red_blue, red_blue, yellow_red_blue ]]]
     
+block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
+             
+    [ # orange
+    [Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
+    [Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
+    [Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
+    ],
+    
+    [ # red
+    [Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
+    [Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
+    [Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
+    ],
+    
+    [ # green
+    [Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
+    [Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
+    [Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
+    ],   
+        
+    [ # blue
+    [Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
+    [Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
+    [Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
+    ],
+    
+    [ # yellow
+    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
+    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
+    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
+    ],
+    
+    [ # white
+    [Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
+    [Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
+    [Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
+    ]
+        
+    ]
+    
     
     # *************************************************************************************************
     
@@ -121,94 +161,100 @@ def draw():
     
 def createCubeVisual():        
     global Cube
-
-    
+    global block
     block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
-
-[ # orange
-[Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
-[Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
-[Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
-],
-
-[ # red
-[Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
-[Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
-[Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
-],
-
-[ # green
-[Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
-[Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
-[Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
-],   
+             
+    [ # orange
+    [Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
+    [Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
+    [Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
+    ],
     
-[ # blue
-[Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
-[Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
-[Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
-],
-
-[ # yellow
-[Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
-[Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-[Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
-],
-
-[ # white
-[Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
-[Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
-[Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
-]
-      
-]
-    for colors in range(0, 6): # runs through the colors
+    [ # green
+    [Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
+    [Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
+    [Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
+    ],   
+    
+    [ # yellow
+    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
+    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
+    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
+    ],    
+    
+    [ # red
+    [Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
+    [Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
+    [Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
+    ],
+    
+    [ # blue
+    [Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
+    [Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
+    [Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
+    ],
+    
+    [ # white
+    [Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
+    [Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
+    [Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
+    ]
+        
+    ]
+    
+    
+    for face in range(0, 6): # runs through the colors
         for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
             for y in range(0, 3): # they run through and create all of the colors needed at the correct positionsr
-                if block[colors][x][y] == 'blue': # the block referances the color of the specific block and face 
-                    pushMatrix() # setup
-                    translate(-3 * blockSize / 2, 0, 0) # moving the cube to the right pos according to loop
-                    rotateY(PI/2) # rotating it so the face its adding is the correct color
-                    colored(block[colors][x][y]) # actually creates the color using a fill command
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) # creates the 
-                    popMatrix() # undoing setup
-                if block[colors][x][y] == 'green': # green
+                if face == 0: # orange
                     pushMatrix()
-                    translate(3 * blockSize / 2, 0, 0)
-                    rotateY(-PI/2)
-                    colored(block[colors][x][y])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    # no rotation
+                    colorFaces(face, x, y)
                     popMatrix()
-                if block[colors][x][y] == 'white': # white
+                if face == 1: # green
                     pushMatrix()
-                    translate(0, -3 * blockSize / 2, 0)
-                    rotateX(PI/2)
-                    colored(block[colors][x][y])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    rotateY(PI / 2)
+                    colorFaces(face, x, y)
                     popMatrix()
-                if block[colors][x][y] == 'yellow': # yellow
+                if face == 2: # yellow
                     pushMatrix()
-                    translate(0, 3 * blockSize / 2, 0)
-                    rotateX(-PI/2)
-                    colored(block[colors][x][y])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+                    
+                    colorFaces(face, x, y)
                     popMatrix()
-                if block[colors][x][y] == 'red': # red
-                    pushMatrix()
-                    translate(0, 0, -3 * blockSize / 2)
-                    colored(block[colors][x][y])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
-                    popMatrix()
-                if block[colors][x][y] == 'orange': # orange
-                    pushMatrix()
-                    translate(0, 0, 3 * blockSize / 2)
-                    rotateZ(PI)
-                    colored(block[colors][x][y])
-                    rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
-                    popMatrix()
+                
    
          
      # *************************************************************************************************
+
+def colorFaces(face, x, y):
+    global block
+    if block[face][x][y] == 'orange': # the block referances the color of the specific block and face 
+        translate(0, 0, 3 * blockSize / 2) # moving the cube to the right pos according to loop
+        colored(block[face][x][y]) # actually creates the color using a fill command
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) 
+    if block[face][x][y] == 'green': # green
+        translate(0, 0, 3 * blockSize / 2)
+        colored(block[face][x][y])
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    if block[face][x][y] == 'yellow': # white
+        translate(0, -3 * blockSize / 2, 0)
+        colored(block[face][x][y])
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    if block[face][x][y] == 'red': # yellow
+        translate(0, 3 * blockSize / 2, 0)
+        colored(block[face][x][y])
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    if block[face][x][y] == 'blue': # red
+        translate(0, 0, -3 * blockSize / 2)
+        colored(block[face][x][y])
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+    if block[face][x][y] == 'white': # orange
+        translate(0, 0, 3 * blockSize / 2)
+        colored(block[face][x][y])
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)  
+            
+    
+    # *************************************************************************************************
     
     
 def mouseClicked(): # if the mouse is clicked, it changes the value of viewState
@@ -331,7 +377,7 @@ def applyScramble():
     
     # *************************************************************************************************
     
-    # NOTE: i may be able to put this in a easier to understand format in the createCubeVisual() function
+
 def colored(c): # handles painting the colors
   if c == 'green':
     fill(0, 150, 0) # green
@@ -345,7 +391,6 @@ def colored(c): # handles painting the colors
     fill(255, 150, 0) # orange
   if c == 'red':
     fill(255, 40, 40) # red
-# i removed a if == 6 because im not sure it ever ran (fill(150))
     
     
     # *************************************************************************************************
