@@ -93,40 +93,64 @@ block = [ #### if you change this list change the one in refreshBlock() ####
     [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
     [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace]
     ],
-    
     [ # green
     [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
     [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
     [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]
     ],   
-    
     [ # yellow
     [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
     [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
     [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]
     ],    
-    
     [ # red
     [Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
     [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
     [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]
     ],
-    
     [ # blue
     [Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
     [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
     [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]
     ],
-    
     [ # white
     [Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
     [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
     [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
-    ]
-    ]
+    ]]
+ 
+ 
+SolvedCube = [[[ white_orange_green, orange_green, yellow_orange_green ], 
+[ white_green, green_, yellow_green ],
+[ white_red_green, red_green, yellow_red_green ]],
+[[ white_orange, orange_, yellow_orange ], 
+[ white_, core, yellow_ ],
+[ white_red, red_, yellow_red ]],
+[[ white_orange_blue, orange_blue, yellow_orange_blue ], 
+[ white_blue, blue_, yellow_blue ],
+[ white_red_blue, red_blue, yellow_red_blue ]]]          
     
-    
-    # *************************************************************************************************
+SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCube[2][0][2].yFace],
+[SolvedCube[1][0][0].yFace, SolvedCube[1][0][1].yFace, SolvedCube[1][0][2].yFace],
+[SolvedCube[0][0][0].yFace, SolvedCube[0][0][1].yFace, SolvedCube[0][0][2].yFace]],
+[[SolvedCube[0][0][0].xFace, SolvedCube[0][0][1].xFace, SolvedCube[0][0][2].xFace],
+[SolvedCube[0][1][0].xFace, SolvedCube[0][1][1].xFace, SolvedCube[0][1][2].xFace],
+[SolvedCube[0][2][0].xFace, SolvedCube[0][2][1].xFace, SolvedCube[0][2][2].xFace]],   
+[[SolvedCube[2][0][2].zFace, SolvedCube[2][1][2].zFace, SolvedCube[2][2][2].zFace],
+[SolvedCube[1][0][2].zFace, SolvedCube[1][1][2].zFace, SolvedCube[1][2][2].zFace],
+[SolvedCube[0][0][2].zFace, SolvedCube[0][1][2].zFace, SolvedCube[0][2][2].zFace]],    
+[[SolvedCube[0][2][0].yFace, SolvedCube[0][2][1].yFace, SolvedCube[0][2][2].yFace],
+[SolvedCube[1][2][0].yFace, SolvedCube[1][2][1].yFace, SolvedCube[1][2][2].yFace],
+[SolvedCube[2][2][0].yFace, SolvedCube[2][2][1].yFace, SolvedCube[2][2][2].yFace]],
+[[SolvedCube[2][2][0].xFace, SolvedCube[2][2][1].xFace, SolvedCube[2][2][2].xFace],
+[SolvedCube[2][1][0].xFace, SolvedCube[2][1][1].xFace, SolvedCube[2][1][2].xFace],
+[SolvedCube[2][0][0].xFace, SolvedCube[2][0][1].xFace, SolvedCube[2][0][2].xFace]],
+[[SolvedCube[2][2][0].zFace, SolvedCube[2][1][0].zFace, SolvedCube[2][0][0].zFace],
+[SolvedCube[1][2][0].zFace, SolvedCube[1][1][0].zFace, SolvedCube[1][0][0].zFace],
+[SolvedCube[0][2][0].zFace, SolvedCube[0][1][0].zFace, SolvedCube[0][0][0].zFace]]]
+
+
+# *************************************************************************************************
     
     
 def setup(): # this only runs once
@@ -319,7 +343,10 @@ def scramble(): # generates a random 25 move scramble in list format that i can 
 # gets run by draw if a key is released, it is here for easier reading and a smaller draw funtion
 
 def keyPressed(): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
-    if key == 'r': # single moves
+    if key == '\n':
+        if cubeNotSolved():
+            solveCube()
+    elif key == 'r': # single moves
         R()
     elif key == 'R':
         R_()
@@ -369,8 +396,6 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         Z_()
     elif key == ' ':
         applyScramble()
-    
-        
 
 
     # *************************************************************************************************
@@ -399,7 +424,102 @@ def applyScramble():
             U()
         elif move == 'U_':
             U_()
+            
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # these functions handle solving the cube
+    
+def cubeNotSolved():
+    if Cube == SolvedCube and block == SolvedBlock:
+        return False
+    else:
+        return True
 
+
+    # *************************************************************************************************
+    
+    
+def solveCube():
+    if cross_Not_Solved():
+        solve_Cross()
+    
+    elif f2l_Not_Solved():
+        solve_f2l()
+    
+    elif OLL_Not_Solved():
+        solve_OLL()
+    
+    elif PLL_Not_Solved():
+        solve_PLL
+        
+    
+    # *************************************************************************************************
+    
+def cross_Not_Solved():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def solve_Cross():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def f2l_Not_Solved():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def solve_f2l():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def OLL_Not_Solved():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def solve_OLL():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def PLL_Not_Solved():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+def solve_PLL():
+    pass
+    
+    
+    # *************************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     # *************************************************************************************************
     # *************************************************************************************************
