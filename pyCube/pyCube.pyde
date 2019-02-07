@@ -89,33 +89,33 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
              
     [ # orange
-    [Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
-    [Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
-    [Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
-    ],
-    
-    [ # red
-    [Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
-    [Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
-    [Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
+    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace],
+    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
+    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace]
     ],
     
     [ # green
-    [Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
-    [Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
-    [Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
+    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace],
+    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
+    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace]
     ],   
-        
-    [ # blue
-    [Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
-    [Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
-    [Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
-    ],
     
     [ # yellow
-    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
+    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
     [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
+    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]
+    ],    
+    
+    [ # red
+    [Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
+    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
+    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]
+    ],
+    
+    [ # blue
+    [Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
+    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
+    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]
     ],
     
     [ # white
@@ -162,45 +162,6 @@ def draw():
 def createCubeVisual():        
     global Cube
     global block
-    block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
-             
-    [ # orange
-    [Cube[0][0][0].yFace, Cube[1][0][0].yFace, Cube[2][0][0].yFace],
-    [Cube[0][0][1].yFace, Cube[1][0][1].yFace, Cube[2][0][1].yFace],
-    [Cube[0][0][2].yFace, Cube[1][0][2].yFace, Cube[2][0][2].yFace]
-    ],
-    
-    [ # green
-    [Cube[0][0][0].xFace, Cube[0][1][0].xFace, Cube[0][2][0].xFace],
-    [Cube[0][0][1].xFace, Cube[0][1][1].xFace, Cube[0][2][1].xFace],
-    [Cube[0][0][2].xFace, Cube[0][1][2].xFace, Cube[0][2][2].xFace]
-    ],   
-    
-    [ # yellow
-    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace],
-    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace]
-    ],    
-    
-    [ # red
-    [Cube[0][2][0].yFace, Cube[1][2][0].yFace, Cube[2][2][0].yFace],
-    [Cube[0][2][1].yFace, Cube[1][2][1].yFace, Cube[2][2][1].yFace],
-    [Cube[0][2][2].yFace, Cube[1][2][2].yFace, Cube[2][2][2].yFace]
-    ],
-    
-    [ # blue
-    [Cube[2][0][0].xFace, Cube[2][1][0].xFace, Cube[2][2][0].xFace],
-    [Cube[2][0][1].xFace, Cube[2][1][1].xFace, Cube[2][2][1].xFace],
-    [Cube[2][0][2].xFace, Cube[2][1][2].xFace, Cube[2][2][2].xFace] 
-    ],
-    
-    [ # white
-    [Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
-    [Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
-    [Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
-    ]
-        
-    ]
     
     
     for face in range(0, 6): # runs through the colors
