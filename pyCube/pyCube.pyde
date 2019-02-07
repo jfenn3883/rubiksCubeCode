@@ -89,15 +89,15 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
              
     [ # orange
-    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace],
+    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
     [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
-    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace]
+    [Cube[0][0][0].yFace, Cube[1][0][1].yFace, Cube[0][0][2].yFace]
     ],
     
     [ # green
-    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace],
+    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
     [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
-    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace]
+    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]
     ],   
     
     [ # yellow
@@ -119,9 +119,9 @@ block = [ # so the cube rotation works! # this may not work, im testing a linkin
     ],
     
     [ # white
-    [Cube[0][0][0].zFace, Cube[0][1][0].zFace, Cube[0][2][0].zFace],
-    [Cube[1][0][0].zFace, Cube[1][1][0].zFace, Cube[1][2][0].zFace],
-    [Cube[2][0][0].zFace, Cube[2][1][0].zFace, Cube[2][2][0].zFace]
+    [Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
+    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
+    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
     ]
         
     ]
@@ -163,6 +163,44 @@ def createCubeVisual():
     global Cube
     global block
     
+    block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end    
+    [ # orange
+    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
+    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
+    [Cube[0][0][0].yFace, Cube[1][0][1].yFace, Cube[0][0][2].yFace]
+    ],
+    
+    [ # green
+    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
+    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
+    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]
+    ],   
+    
+    [ # yellow
+    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
+    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
+    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]
+    ],    
+    
+    [ # red
+    [Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
+    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
+    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]
+    ],
+    
+    [ # blue
+    [Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
+    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
+    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]
+    ],
+    
+    [ # white
+    [Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
+    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
+    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
+    ]
+    ]
+    
     
     for face in range(0, 6): # runs through the colors
         for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
@@ -202,6 +240,7 @@ def createCubeVisual():
          
      # *************************************************************************************************
 
+
 def colorFaces(face, x, y):
     global block
     if block[face][x][y] == 'orange': # the block referances the color of the specific block and face 
@@ -229,6 +268,24 @@ def colorFaces(face, x, y):
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)  
             
+    
+        # *************************************************************************************************
+    
+
+def colored(c): # handles painting the colors
+  if c == 'green':
+    fill(0, 150, 0) # green
+  if c == 'blue':
+    fill(0, 100, 255) # blue
+  if c == 'yellow':
+    fill(200, 200, 0) # yellow
+  if c == 'white':
+    fill(200) # white
+  if c == 'orange':
+    fill(255, 150, 0) # orange
+  if c == 'red':
+    fill(255, 40, 40) # red
+    
     
     # *************************************************************************************************
     
@@ -349,24 +406,6 @@ def applyScramble():
             U()
         elif move == 'U_':
             U_()
-    
-    
-    # *************************************************************************************************
-    
-
-def colored(c): # handles painting the colors
-  if c == 'green':
-    fill(0, 150, 0) # green
-  if c == 'blue':
-    fill(0, 100, 255) # blue
-  if c == 'yellow':
-    fill(200, 200, 0) # yellow
-  if c == 'white':
-    fill(200) # white
-  if c == 'orange':
-    fill(255, 150, 0) # orange
-  if c == 'red':
-    fill(255, 40, 40) # red
     
     
     # *************************************************************************************************
