@@ -6,14 +6,16 @@
 
 # SETUP! defs, imports, and initiation
 import random
+import sys
+sys.setrecursionlimit(1500)
 
 numSides = 3 # the number of sides 
 blockSize = 240 / numSides # the size of one piece
 blockColorSize = blockSize * .75 # the size of the color in proportion
 viewState = 'locked' # for the toggleable camera
-w = numSides # these are equal to 3
-v = numSides
-# i removed a variable called colors here and made it a list down, not sure if i need it
+x = numSides # these are equal to 3
+y = numSides
+
 
 class Block(object): # block
 
@@ -25,10 +27,7 @@ class Block(object): # block
         self.yFace = yFace
         self.zFace = zFace
         
-        
-""" i use a pseudo-tracking method to keep track of the blocks, by creating the cube solved, 
-the cube always starts in the same state, i just make sure to adjust the value of
-the block so that they match the actual cube """
+
 # creating the blocks, set up in the same format as Cube 
 white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
 orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
@@ -69,7 +68,7 @@ red_blue =               Block('red_blue',                     'edge',     'blue
 yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
     
     
-    # cube dictionary
+    # cube array
 Cube = [# this is the actual setup for the cube, and can be used to figure out what is where
                   # can be referanced by x, y, z
                   # 0, 0, 0 is the left, front, bottom
@@ -85,13 +84,14 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 [[ white_orange_blue, orange_blue, yellow_orange_blue ], 
 [ white_blue, blue_, yellow_blue ],
 [ white_red_blue, red_blue, yellow_red_blue ]]]
-    
-block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end
-             
+
+# this is a 3d list that takes the faces of each side so that the cube visualation is integrated
+
+block = [ #### if you change this list change the one in refreshBlock() ####
     [ # orange
     [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
     [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
-    [Cube[0][0][0].yFace, Cube[1][0][1].yFace, Cube[0][0][2].yFace]
+    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace]
     ],
     
     [ # green
@@ -123,7 +123,6 @@ block = [ # so the cube rotation works! # this may not work, im testing a linkin
     [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
     [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
     ]
-        
     ]
     
     
@@ -146,11 +145,11 @@ def draw():
     translate(width / 2, height / 2) # moves the cube so its actually in the frame
     fill(255)
     
-    if viewState == 'free': # if its free, the camera follows the mouse
-        rotateX(-mouseY * PI / 300)
-        rotateY(mouseX * PI / 300)
+    if viewState == 'free': # becasue of the way camera stuff works, this needs to be in draw
+        rotateX(-mouseY * PI / 300)    # when you click the mouse, a function changes the variable viewState
+        rotateY(mouseX * PI / 300)     # this top code follows mouse
     else:
-        rotateX((3 * PI / 4) + (PI / 16)) # the cube is set to a default position, which is + PI / 2 off normal
+        rotateX((3 * PI / 4) + (PI / 16)) # the cube is set to a default position, which is + PI / 16 off normal
         rotateY((3 * PI / 4) + (PI / 16))
 
     createCubeVisual()
@@ -162,54 +161,16 @@ def draw():
 def createCubeVisual():        
     global Cube
     global block
-    
-    block = [ # so the cube rotation works! # this may not work, im testing a linking of the front and back end    
-    [ # orange
-    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
-    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
-    [Cube[0][0][0].yFace, Cube[1][0][1].yFace, Cube[0][0][2].yFace]
-    ],
-    
-    [ # green
-    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
-    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
-    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]
-    ],   
-    
-    [ # yellow
-    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
-    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]
-    ],    
-    
-    [ # red
-    [Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
-    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
-    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]
-    ],
-    
-    [ # blue
-    [Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
-    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
-    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]
-    ],
-    
-    [ # white
-    [Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
-    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
-    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
-    ]
-    ]
-    
+    refreshBlock() # updates the block array to the correct config
     
     for face in range(0, 6): # runs through the colors
         for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
             for y in range(0, 3): # they run through and create all of the colors needed at the correct positionsr
                 if face == 0: # orange
-                    pushMatrix()
+                    pushMatrix() # retrives a default pos
                     # no rotation
-                    colorFaces(face, x, y)
-                    popMatrix()
+                    colorFaces(face, x, y) # this draw the face we are on, in this case its orange
+                    popMatrix() # undos the default pos
                 if face == 1: # green
                     pushMatrix()
                     rotateY(PI / 2)
@@ -243,26 +204,31 @@ def createCubeVisual():
 
 def colorFaces(face, x, y):
     global block
-    if block[face][x][y] == 'orange': # the block referances the color of the specific block and face 
-        translate(0, 0, 3 * blockSize / 2) # moving the cube to the right pos according to loop
-        colored(block[face][x][y]) # actually creates the color using a fill command
-        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) 
+    if block[face][x][y] == 'orange': # this isnt the color, just the corresponding face
+        translate(0, 0, 3 * blockSize / 2) # moves the face into the right place. this is the same for every color, as the rotation before puts it in the place
+        colored(block[face][x][y]) # the function handles painting the colors correctly
+        rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize) # creates the rectange that is the color
+    
     if block[face][x][y] == 'green': # green
         translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    
     if block[face][x][y] == 'yellow': # white
         translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    
     if block[face][x][y] == 'red': # yellow
         translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 + .5), blockColorSize, blockColorSize)
+    
     if block[face][x][y] == 'blue': # red
         translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
         rect(blockSize * (x - 3 / 2.0 + .5), blockSize * (y - 3 / 2.0 +.5), blockColorSize, blockColorSize)
+    
     if block[face][x][y] == 'white': # orange
         translate(0, 0, 3 * blockSize / 2)
         colored(block[face][x][y])
@@ -272,19 +238,45 @@ def colorFaces(face, x, y):
         # *************************************************************************************************
     
 
-def colored(c): # handles painting the colors
+def colored(c): # handles changing the color being painted
   if c == 'green':
-    fill(0, 150, 0) # green
+    fill(0, 150, 0)   # green
   if c == 'blue':
     fill(0, 100, 255) # blue
   if c == 'yellow':
     fill(200, 200, 0) # yellow
   if c == 'white':
-    fill(200) # white
+    fill(200)         # white
   if c == 'orange':
     fill(255, 150, 0) # orange
   if c == 'red':
     fill(255, 40, 40) # red
+    
+    
+    # *************************************************************************************************
+    
+    
+def refreshBlock(): # this just resets block
+                    # its the same array as the one in initilization
+    global block    # this one is just compressed
+    block = [[[Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
+    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
+    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace]],
+    [[Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
+    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
+    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]],   
+    [[Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
+    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
+    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]],    
+    [[Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
+    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
+    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]],
+    [[Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
+    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
+    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]],
+    [[Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
+    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
+    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]]]
     
     
     # *************************************************************************************************
@@ -327,45 +319,31 @@ def scramble(): # generates a random 25 move scramble in list format that i can 
 # gets run by draw if a key is released, it is here for easier reading and a smaller draw funtion
 
 def keyPressed(): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
-    if key == 'r':
+    if key == 'r': # single moves
         R()
-        test_ori()
     elif key == 'R':
         R_()
-        test_ori()
     elif key == 'L':
         L_()
-        test_ori()
     elif key == 'l':
         L()
-        test_ori()
     elif key == 'f':
         F()
-        test_ori()
     elif key == 'F':
         F_()
-        test_ori()
     elif key == 'b':
         B()
-        test_ori()
     elif key == 'B':
         B_()
-        test_ori()
     elif key == 'u':
         U()
-        test_ori()
     elif key == 'U':
         U_()
-        test_ori()
     elif key == 'd':
         D()
-        test_ori()
     elif key == 'D':
         D_()
-        test_ori()
-    elif key == ' ':
-        applyScramble()
-    elif key == 'm':
+    elif key == 'm': # middle moves
         M()
     elif key == 'M':
         M_()
@@ -377,6 +355,21 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         E()
     elif key == 'E':
         E_()
+    elif key == 'x': # rotations
+        X()
+    elif key == 'X':
+        X_()
+    elif key == 'y':
+        Y()
+    elif key == 'Y':
+        Y_()
+    elif key == 'z':
+        Z()
+    elif key == 'Z':
+        Z_()
+    elif key == ' ':
+        applyScramble()
+    
         
 
 
@@ -406,42 +399,28 @@ def applyScramble():
             U()
         elif move == 'U_':
             U_()
-    
-    
-    # *************************************************************************************************
-    
-    
-def test_ori():
-    for xPos in range(0, 3):
-        for yPos in range(0, 3):
-            for zPos in range(0, 3):
-                print xPos, yPos, zPos, Cube[xPos][yPos][zPos].name
-                print Cube[xPos][yPos][zPos].xFace, Cube[xPos][yPos][zPos].yFace, Cube[xPos][yPos][zPos].zFace
-                print ""
-                print ""
+
     
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
-    
-    
-    
     # these functions handle turning the cube 
 
-def R(): # done
+
+def R(): 
     global Cube
     
     
     # edges
-    subs                     = Cube[2][0][1]
+    subs               = Cube[2][0][1]
     Cube[2][0][1]      = Cube[2][1][0]
     Cube[2][1][0]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[2][1][2]
     Cube[2][1][2]      = subs
 
     # corners
-    subs                     = Cube[2][0][0]
+    subs               = Cube[2][0][0]
     Cube[2][0][0]      = Cube[2][2][0]
     Cube[2][2][0]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[2][0][2]
@@ -458,18 +437,18 @@ def R(): # done
   # *************************************************************************************************  
   
   
-def R_(): # done
+def R_(): 
     global Cube
     
     # edges
-    subs                     = Cube[2][0][1]
+    subs               = Cube[2][0][1]
     Cube[2][0][1]      = Cube[2][1][2]
     Cube[2][1][2]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[2][1][0]
     Cube[2][1][0]      = subs
 
     # corners
-    subs                     = Cube[2][0][0]
+    subs               = Cube[2][0][0]
     Cube[2][0][0]      = Cube[2][0][2]
     Cube[2][0][2]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[2][2][0]
@@ -494,18 +473,18 @@ def R2():
     # *************************************************************************************************  
   
   
-def L(): # done
+def L(): 
     global Cube
     
     # edges
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[0][1][2]
     Cube[0][1][2]      = Cube[0][2][1]
     Cube[0][2][1]      = Cube[0][1][0]
     Cube[0][1][0]      = subs
 
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[0][0][2]
     Cube[0][0][2]      = Cube[0][2][2]
     Cube[0][2][2]      = Cube[0][2][0]
@@ -522,18 +501,18 @@ def L(): # done
   # *************************************************************************************************  
   
   
-def L_(): # done
+def L_(): 
     global Cube
     
     # edges
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[0][1][0]
     Cube[0][1][0]      = Cube[0][2][1]
     Cube[0][2][1]      = Cube[0][1][2]
     Cube[0][1][2]      = subs
 
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[0][2][0]
     Cube[0][2][0]      = Cube[0][2][2]
     Cube[0][2][2]      = Cube[0][0][2]
@@ -558,18 +537,18 @@ def L2():
     # *************************************************************************************************
 
 
-def F(): # done
+def F(): 
     global Cube
     
     # edges
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[1][0][0]
     Cube[1][0][0]      = Cube[2][0][1]
     Cube[2][0][1]      = Cube[1][0][2]
     Cube[1][0][2]      = subs
 
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[2][0][0]
     Cube[2][0][0]      = Cube[2][0][2]
     Cube[2][0][2]      = Cube[0][0][2]
@@ -586,18 +565,18 @@ def F(): # done
         # *************************************************************************************************  
   
   
-def F_(): # done
+def F_(): 
     global Cube
     
     # edges
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[1][0][2]
     Cube[1][0][2]      = Cube[2][0][1]
     Cube[2][0][1]      = Cube[1][0][0]
     Cube[1][0][0]      = subs
 
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[0][0][2]
     Cube[0][0][2]      = Cube[2][0][2]
     Cube[2][0][2]      = Cube[2][0][0]
@@ -622,18 +601,18 @@ def F2():
     # *************************************************************************************************
     
    
-def B(): # done
+def B(): 
     global Cube
 
     # edges
-    subs                     = Cube[0][2][1]
+    subs               = Cube[0][2][1]
     Cube[0][2][1]      = Cube[1][2][2]
     Cube[1][2][2]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[1][2][0]
     Cube[1][2][0]      = subs
     
     # corners
-    subs                     = Cube[0][2][0]
+    subs               = Cube[0][2][0]
     Cube[0][2][0]      = Cube[0][2][2]
     Cube[0][2][2]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[2][2][0]
@@ -650,18 +629,18 @@ def B(): # done
     # *************************************************************************************************
     
     
-def B_(): # done
+def B_(): 
     global Cube
 
     # edges
-    subs                     = Cube[0][2][1]
+    subs               = Cube[0][2][1]
     Cube[0][2][1]      = Cube[1][2][0]
     Cube[1][2][0]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[1][2][2]
     Cube[1][2][2]      = subs
     
     # corners
-    subs                     = Cube[0][2][0]
+    subs               = Cube[0][2][0]
     Cube[0][2][0]      = Cube[2][2][0]
     Cube[2][2][0]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[0][2][2]
@@ -686,18 +665,18 @@ def B2():
     # *************************************************************************************************
     
     
-def U(): # done
+def U(): 
     global Cube
 
     # edges
-    subs                     = Cube[1][0][2]
+    subs               = Cube[1][0][2]
     Cube[1][0][2]      = Cube[2][1][2]
     Cube[2][1][2]      = Cube[1][2][2]
     Cube[1][2][2]      = Cube[0][1][2]
     Cube[0][1][2]      = subs
     
     # corners
-    subs                     = Cube[0][0][2]
+    subs               = Cube[0][0][2]
     Cube[0][0][2]      = Cube[2][0][2]
     Cube[2][0][2]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[0][2][2]
@@ -714,18 +693,18 @@ def U(): # done
     # *************************************************************************************************
     
     
-def U_(): # done
+def U_():
     global Cube
 
     # edges
-    subs                     = Cube[1][0][2]
+    subs               = Cube[1][0][2]
     Cube[1][0][2]      = Cube[0][1][2]
     Cube[0][1][2]      = Cube[1][2][2]
     Cube[1][2][2]      = Cube[2][1][2]
     Cube[2][1][2]      = subs
     
     # corners
-    subs                     = Cube[0][0][2]
+    subs               = Cube[0][0][2]
     Cube[0][0][2]      = Cube[0][2][2]
     Cube[0][2][2]      = Cube[2][2][2]
     Cube[2][2][2]      = Cube[2][0][2]
@@ -750,18 +729,18 @@ def U2():
 # *************************************************************************************************
 
 
-def D(): # done
+def D(): 
     global Cube
 
     # edges
-    subs                     = Cube[1][0][0]
+    subs               = Cube[1][0][0]
     Cube[1][0][0]      = Cube[0][1][0]
     Cube[0][1][0]      = Cube[1][2][0]
     Cube[1][2][0]      = Cube[2][1][0]
     Cube[2][1][0]      = subs
     
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[0][2][0]
     Cube[0][2][0]      = Cube[2][2][0]
     Cube[2][2][0]      = Cube[2][0][0]
@@ -778,18 +757,18 @@ def D(): # done
 # *************************************************************************************************
 
 
-def D_(): # done
+def D_(): 
     global Cube
 
     # edges
-    subs                     = Cube[1][0][0]
+    subs               = Cube[1][0][0]
     Cube[1][0][0]      = Cube[2][1][0]
     Cube[2][1][0]      = Cube[1][2][0]
     Cube[1][2][0]      = Cube[0][1][0]
     Cube[0][1][0]      = subs
     
     # corners
-    subs                     = Cube[0][0][0]
+    subs               = Cube[0][0][0]
     Cube[0][0][0]      = Cube[2][0][0]
     Cube[2][0][0]      = Cube[2][2][0]
     Cube[2][2][0]      = Cube[0][2][0]
@@ -814,18 +793,18 @@ def D2():
     # *************************************************************************************************
 
 
-def M(): # NAT NVT
+def M(): 
     global Cube
     
     # edges
-    subs                     = Cube[2][0][1]
+    subs               = Cube[1][0][1]
     Cube[1][0][1]      = Cube[1][1][2]
     Cube[1][1][2]      = Cube[1][2][1]
     Cube[1][2][1]      = Cube[1][1][0]
     Cube[1][1][0]      = subs
 
     # corners
-    subs                     = Cube[2][0][0]
+    subs               = Cube[1][0][0]
     Cube[1][0][0]      = Cube[1][0][2]
     Cube[1][0][2]      = Cube[1][2][2]
     Cube[1][2][2]      = Cube[1][2][0]
@@ -842,19 +821,19 @@ def M(): # NAT NVT
     # *************************************************************************************************
 
 
-def M_(): # NAT NVT
+def M_(): 
     global Cube
     
     
     # edges
-    subs                     = Cube[1][0][1]
+    subs               = Cube[1][0][1]
     Cube[1][0][1]      = Cube[1][1][0]
     Cube[1][1][0]      = Cube[1][2][1]
     Cube[1][2][1]      = Cube[1][1][2]
     Cube[1][1][2]      = subs
 
     # corners
-    subs                     = Cube[2][0][0]
+    subs               = Cube[1][0][0]
     Cube[1][0][0]      = Cube[1][2][0]
     Cube[1][2][0]      = Cube[1][2][2]
     Cube[1][2][2]      = Cube[1][0][2]
@@ -879,18 +858,18 @@ def M2():
     # *************************************************************************************************
 
 
-def E(): # NAT NVT
+def E(): 
     global Cube
 
     # edges
-    subs                     = Cube[1][0][1]
+    subs               = Cube[1][0][1]
     Cube[1][0][1]      = Cube[0][1][1]
     Cube[0][1][1]      = Cube[1][2][1]
     Cube[1][2][1]      = Cube[2][1][1]
     Cube[2][1][1]      = subs
     
     # corners
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[0][2][1]
     Cube[0][2][1]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[2][0][1]
@@ -907,18 +886,18 @@ def E(): # NAT NVT
     # *************************************************************************************************
 
 
-def E_(): # NAT NVT
+def E_(): 
     global Cube
 
     # edges
-    subs                     = Cube[1][0][1]
+    subs               = Cube[1][0][1]
     Cube[1][0][1]      = Cube[2][1][1]
     Cube[2][1][1]      = Cube[1][2][1]
     Cube[1][2][1]      = Cube[0][1][1]
     Cube[0][1][1]      = subs
     
     # corners
-    subs                     = Cube[0][0][1]
+    subs               = Cube[0][0][1]
     Cube[0][0][1]      = Cube[2][0][1]
     Cube[2][0][1]      = Cube[2][2][1]
     Cube[2][2][1]      = Cube[0][2][1]
@@ -943,18 +922,18 @@ def E2():
     # *************************************************************************************************
 
 
-def S(): # NAT NVT
+def S(): 
     global Cube
     
     # edges
-    subs                     = Cube[0][1][1]
+    subs               = Cube[0][1][1]
     Cube[0][1][1]      = Cube[1][1][0]
     Cube[1][1][0]      = Cube[2][1][1]
     Cube[2][1][1]      = Cube[1][1][2]
     Cube[1][1][2]      = subs
 
     # corners
-    subs                     = Cube[0][1][0]
+    subs               = Cube[0][1][0]
     Cube[0][1][0]      = Cube[2][1][0]
     Cube[2][1][0]      = Cube[2][1][2]
     Cube[2][1][2]      = Cube[0][1][2]
@@ -975,14 +954,14 @@ def S_():
     global Cube
     
     # edges
-    subs                     = Cube[0][1][1]
+    subs               = Cube[0][1][1]
     Cube[0][1][1]      = Cube[1][1][2]
     Cube[1][1][2]      = Cube[2][1][1]
     Cube[2][1][1]      = Cube[1][1][0]
     Cube[1][1][0]      = subs
 
     # corners
-    subs                     = Cube[0][1][0]
+    subs               = Cube[0][1][0]
     Cube[0][1][0]      = Cube[0][1][2]
     Cube[0][1][2]      = Cube[2][1][2]
     Cube[2][1][2]      = Cube[2][1][0]
@@ -1007,7 +986,7 @@ def S2():
     # *************************************************************************************************
 
 
-def r(): # NAT NVT
+def r(): 
     R()
     M_()
 
@@ -1015,7 +994,7 @@ def r(): # NAT NVT
     # *************************************************************************************************
 
 
-def r_(): # NAT NVT
+def r_(): 
     R_()
     M()
 
@@ -1023,7 +1002,7 @@ def r_(): # NAT NVT
     # *************************************************************************************************
 
     
-def r2(): # NAT NVT
+def r2(): 
     r()
     r()
     
@@ -1031,23 +1010,23 @@ def r2(): # NAT NVT
     # *************************************************************************************************
     
     
-def l(): # NAT NVT
-    l()
+def l(): 
+    L()
     M()
 
 
     # *************************************************************************************************
 
 
-def l_(): # NAT NVT
-    l_()
+def l_(): 
+    L_()
     M_()
 
 
     # *************************************************************************************************
 
     
-def l2(): # NAT NVT
+def l2(): 
     l()
     l()
 
@@ -1055,7 +1034,7 @@ def l2(): # NAT NVT
     # *************************************************************************************************
     
 
-def u(): # NAT NVT
+def u(): 
     U()
     E_()
 
@@ -1063,7 +1042,7 @@ def u(): # NAT NVT
     # *************************************************************************************************
 
 
-def u_(): # NAT NVT
+def u_(): 
     U_()
     E()
 
@@ -1071,7 +1050,7 @@ def u_(): # NAT NVT
     # *************************************************************************************************
 
     
-def u2(): # NAT NVT
+def u2(): 
     u()
     u()
 
@@ -1079,7 +1058,7 @@ def u2(): # NAT NVT
     # *************************************************************************************************
     
 
-def d(): # NAT NVT
+def d(): 
     D()
     E()
 
@@ -1087,7 +1066,7 @@ def d(): # NAT NVT
     # *************************************************************************************************
 
 
-def d_(): # NAT NVT
+def d_(): 
     D_()
     E_()
 
@@ -1095,7 +1074,7 @@ def d_(): # NAT NVT
     # *************************************************************************************************
 
     
-def d2(): # NAT NVT
+def d2(): 
     d()
     d()
 
@@ -1103,7 +1082,7 @@ def d2(): # NAT NVT
     # *************************************************************************************************
 
     
-def f(): # NAT NVT
+def f(): 
     F()
     S()
 
@@ -1111,7 +1090,7 @@ def f(): # NAT NVT
     # *************************************************************************************************
 
 
-def f_(): # NAT NVT
+def f_(): 
     F_()
     S_()
 
@@ -1119,7 +1098,7 @@ def f_(): # NAT NVT
     # *************************************************************************************************
 
     
-def f2(): # NAT NVT
+def f2(): 
     f()
     f()
 
@@ -1127,7 +1106,7 @@ def f2(): # NAT NVT
     # *************************************************************************************************
     
   
-def b(): # NAT NVT
+def b(): 
     B()
     S_()
 
@@ -1135,7 +1114,7 @@ def b(): # NAT NVT
     # *************************************************************************************************
     
 
-def b_(): # NAT NVT
+def b_(): 
     B_()
     S()
 
@@ -1143,14 +1122,14 @@ def b_(): # NAT NVT
     # *************************************************************************************************
 
 
-def b2(): # NAT NVT
+def b2(): 
     b()
     b()
 
     # *************************************************************************************************
 
     
-def X(): # NAT NVT
+def X(): 
     R()
     l_()
 
@@ -1158,7 +1137,7 @@ def X(): # NAT NVT
     # *************************************************************************************************
 
 
-def X_(): # NAT NVT
+def X_(): 
     R_()
     l()
 
@@ -1166,7 +1145,7 @@ def X_(): # NAT NVT
     # *************************************************************************************************
 
     
-def X2(): # NAT NVT
+def X2(): 
     X()
     X()
 
@@ -1174,7 +1153,7 @@ def X2(): # NAT NVT
     # *************************************************************************************************
     
 
-def Y(): # NAT NVT
+def Y(): 
     U()
     d_()
 
@@ -1182,7 +1161,7 @@ def Y(): # NAT NVT
     # *************************************************************************************************
 
 
-def Y_(): # NAT NVT
+def Y_(): 
     U_()
     d()
 
@@ -1190,7 +1169,7 @@ def Y_(): # NAT NVT
     # *************************************************************************************************
 
     
-def Y2(): # NAT NVT
+def Y2(): 
     Y()
     Y()
 
@@ -1198,7 +1177,7 @@ def Y2(): # NAT NVT
     # *************************************************************************************************
     
 
-def Z(): # NAT NVT
+def Z(): 
     F()
     b_()
 
@@ -1206,7 +1185,7 @@ def Z(): # NAT NVT
     # *************************************************************************************************
 
 
-def Z_(): # NAT NVT
+def Z_(): 
     F_()
     b()
 
@@ -1214,7 +1193,7 @@ def Z_(): # NAT NVT
     # *************************************************************************************************
     
     
-def Z2(): # NAT NVT
+def Z2(): 
     Z()
     Z()
 
