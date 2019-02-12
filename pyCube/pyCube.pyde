@@ -460,7 +460,7 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         if cubeNotSolved():
             solveCube()
     elif key == 'r': # single moves
-        R()
+        R(Cube)
     elif key == 'R':
         R_()
     elif key == 'L':
@@ -546,30 +546,28 @@ def applyScramble():
     # these functions handle turning the cube 
 
 
-def R(): 
-    global Cube
-    
+def R(arrayName): 
     
     # edges
-    subs               = Cube[2][0][1]
-    Cube[2][0][1]      = Cube[2][1][0]
-    Cube[2][1][0]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[2][1][2]
-    Cube[2][1][2]      = subs
+    subs               = arrayName[2][0][1]
+    arrayName[2][0][1]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = subs
 
     # corners
-    subs               = Cube[2][0][0]
-    Cube[2][0][0]      = Cube[2][2][0]
-    Cube[2][2][0]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[2][0][2]
-    Cube[2][0][2]      = subs
+    subs               = arrayName[2][0][0]
+    arrayName[2][0][0]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = subs
 
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[2][yPos][zPos].yFace
-            Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
-            Cube[2][yPos][zPos].zFace = subs
+            subs = arrayName[2][yPos][zPos].yFace
+            arrayName[2][yPos][zPos].yFace = arrayName[2][yPos][zPos].zFace
+            arrayName[2][yPos][zPos].zFace = subs
                            
           
   # *************************************************************************************************  
