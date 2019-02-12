@@ -1,5 +1,5 @@
-# space scrambles the cube randomly
-# r, u, b, etc, move the cube in there respective ways
+# space scrambles the arrayName randomly
+# r, u, b, etc, move the arrayName in there respective ways
 # holding shift will do the counter clockwise move
 
 
@@ -26,7 +26,7 @@ class Block(object): # block
         self.zFace = zFace
         
 
-# creating the blocks, set up in the same format as Cube 
+# creating the blocks, set up in the same format as arrayName 
 white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
 orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
 yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
@@ -66,8 +66,8 @@ red_blue =               Block('red_blue',                     'edge',     'blue
 yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
     
     
-    # cube array
-Cube = [# this is the actual setup for the cube, and can be used to figure out what is where
+    # arrayName array
+arrayName = [# this is the actual setup for the arrayName, and can be used to figure out what is where
                   # can be referanced by x, y, z
                   # 0, 0, 0 is the left, front, bottom
                 
@@ -83,42 +83,42 @@ Cube = [# this is the actual setup for the cube, and can be used to figure out w
 [ white_blue, blue_, yellow_blue ],
 [ white_red_blue, red_blue, yellow_red_blue ]]]
 
-# this is a 3d list that takes the faces of each side so that the cube visualation is integrated
+# this is a 3d list that takes the faces of each side so that the arrayName visualation is integrated
 
-block = [ #### if you change this list change the one in refreshBlock() ####
+block = [ #### if you change this list change the one in refreshBlock(arrayName) ####
     [ # orange
-    [Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
-    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
-    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace]
+    [arrayName[2][0][0].yFace, arrayName[2][0][1].yFace, arrayName[2][0][2].yFace],
+    [arrayName[1][0][0].yFace, arrayName[1][0][1].yFace, arrayName[1][0][2].yFace],
+    [arrayName[0][0][0].yFace, arrayName[0][0][1].yFace, arrayName[0][0][2].yFace]
     ],
     [ # green
-    [Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
-    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
-    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]
+    [arrayName[0][0][0].xFace, arrayName[0][0][1].xFace, arrayName[0][0][2].xFace],
+    [arrayName[0][1][0].xFace, arrayName[0][1][1].xFace, arrayName[0][1][2].xFace],
+    [arrayName[0][2][0].xFace, arrayName[0][2][1].xFace, arrayName[0][2][2].xFace]
     ],   
     [ # yellow
-    [Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
-    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]
+    [arrayName[2][0][2].zFace, arrayName[2][1][2].zFace, arrayName[2][2][2].zFace],
+    [arrayName[1][0][2].zFace, arrayName[1][1][2].zFace, arrayName[1][2][2].zFace],
+    [arrayName[0][0][2].zFace, arrayName[0][1][2].zFace, arrayName[0][2][2].zFace]
     ],    
     [ # red
-    [Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
-    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
-    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]
+    [arrayName[0][2][0].yFace, arrayName[0][2][1].yFace, arrayName[0][2][2].yFace],
+    [arrayName[1][2][0].yFace, arrayName[1][2][1].yFace, arrayName[1][2][2].yFace],
+    [arrayName[2][2][0].yFace, arrayName[2][2][1].yFace, arrayName[2][2][2].yFace]
     ],
     [ # blue
-    [Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
-    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
-    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]
+    [arrayName[2][2][0].xFace, arrayName[2][2][1].xFace, arrayName[2][2][2].xFace],
+    [arrayName[2][1][0].xFace, arrayName[2][1][1].xFace, arrayName[2][1][2].xFace],
+    [arrayName[2][0][0].xFace, arrayName[2][0][1].xFace, arrayName[2][0][2].xFace]
     ],
     [ # white
-    [Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
-    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
-    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]
+    [arrayName[2][2][0].zFace, arrayName[2][1][0].zFace, arrayName[2][0][0].zFace],
+    [arrayName[1][2][0].zFace, arrayName[1][1][0].zFace, arrayName[1][0][0].zFace],
+    [arrayName[0][2][0].zFace, arrayName[0][1][0].zFace, arrayName[0][0][0].zFace]
     ]]
  
  
-SolvedCube = [[[ white_orange_green, orange_green, yellow_orange_green ], 
+SolvedarrayName = [[[ white_orange_green, orange_green, yellow_orange_green ], 
 [ white_green, green_, yellow_green ],
 [ white_red_green, red_green, yellow_red_green ]],
 [[ white_orange, orange_, yellow_orange ], 
@@ -128,97 +128,97 @@ SolvedCube = [[[ white_orange_green, orange_green, yellow_orange_green ],
 [ white_blue, blue_, yellow_blue ],
 [ white_red_blue, red_blue, yellow_red_blue ]]]          
     
-SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCube[2][0][2].yFace],
-[SolvedCube[1][0][0].yFace, SolvedCube[1][0][1].yFace, SolvedCube[1][0][2].yFace],
-[SolvedCube[0][0][0].yFace, SolvedCube[0][0][1].yFace, SolvedCube[0][0][2].yFace]],
-[[SolvedCube[0][0][0].xFace, SolvedCube[0][0][1].xFace, SolvedCube[0][0][2].xFace],
-[SolvedCube[0][1][0].xFace, SolvedCube[0][1][1].xFace, SolvedCube[0][1][2].xFace],
-[SolvedCube[0][2][0].xFace, SolvedCube[0][2][1].xFace, SolvedCube[0][2][2].xFace]],   
-[[SolvedCube[2][0][2].zFace, SolvedCube[2][1][2].zFace, SolvedCube[2][2][2].zFace],
-[SolvedCube[1][0][2].zFace, SolvedCube[1][1][2].zFace, SolvedCube[1][2][2].zFace],
-[SolvedCube[0][0][2].zFace, SolvedCube[0][1][2].zFace, SolvedCube[0][2][2].zFace]],    
-[[SolvedCube[0][2][0].yFace, SolvedCube[0][2][1].yFace, SolvedCube[0][2][2].yFace],
-[SolvedCube[1][2][0].yFace, SolvedCube[1][2][1].yFace, SolvedCube[1][2][2].yFace],
-[SolvedCube[2][2][0].yFace, SolvedCube[2][2][1].yFace, SolvedCube[2][2][2].yFace]],
-[[SolvedCube[2][2][0].xFace, SolvedCube[2][2][1].xFace, SolvedCube[2][2][2].xFace],
-[SolvedCube[2][1][0].xFace, SolvedCube[2][1][1].xFace, SolvedCube[2][1][2].xFace],
-[SolvedCube[2][0][0].xFace, SolvedCube[2][0][1].xFace, SolvedCube[2][0][2].xFace]],
-[[SolvedCube[2][2][0].zFace, SolvedCube[2][1][0].zFace, SolvedCube[2][0][0].zFace],
-[SolvedCube[1][2][0].zFace, SolvedCube[1][1][0].zFace, SolvedCube[1][0][0].zFace],
-[SolvedCube[0][2][0].zFace, SolvedCube[0][1][0].zFace, SolvedCube[0][0][0].zFace]]]
+SolvedBlock = [[[SolvedarrayName[2][0][0].yFace, SolvedarrayName[2][0][1].yFace, SolvedarrayName[2][0][2].yFace],
+[SolvedarrayName[1][0][0].yFace, SolvedarrayName[1][0][1].yFace, SolvedarrayName[1][0][2].yFace],
+[SolvedarrayName[0][0][0].yFace, SolvedarrayName[0][0][1].yFace, SolvedarrayName[0][0][2].yFace]],
+[[SolvedarrayName[0][0][0].xFace, SolvedarrayName[0][0][1].xFace, SolvedarrayName[0][0][2].xFace],
+[SolvedarrayName[0][1][0].xFace, SolvedarrayName[0][1][1].xFace, SolvedarrayName[0][1][2].xFace],
+[SolvedarrayName[0][2][0].xFace, SolvedarrayName[0][2][1].xFace, SolvedarrayName[0][2][2].xFace]],   
+[[SolvedarrayName[2][0][2].zFace, SolvedarrayName[2][1][2].zFace, SolvedarrayName[2][2][2].zFace],
+[SolvedarrayName[1][0][2].zFace, SolvedarrayName[1][1][2].zFace, SolvedarrayName[1][2][2].zFace],
+[SolvedarrayName[0][0][2].zFace, SolvedarrayName[0][1][2].zFace, SolvedarrayName[0][2][2].zFace]],    
+[[SolvedarrayName[0][2][0].yFace, SolvedarrayName[0][2][1].yFace, SolvedarrayName[0][2][2].yFace],
+[SolvedarrayName[1][2][0].yFace, SolvedarrayName[1][2][1].yFace, SolvedarrayName[1][2][2].yFace],
+[SolvedarrayName[2][2][0].yFace, SolvedarrayName[2][2][1].yFace, SolvedarrayName[2][2][2].yFace]],
+[[SolvedarrayName[2][2][0].xFace, SolvedarrayName[2][2][1].xFace, SolvedarrayName[2][2][2].xFace],
+[SolvedarrayName[2][1][0].xFace, SolvedarrayName[2][1][1].xFace, SolvedarrayName[2][1][2].xFace],
+[SolvedarrayName[2][0][0].xFace, SolvedarrayName[2][0][1].xFace, SolvedarrayName[2][0][2].xFace]],
+[[SolvedarrayName[2][2][0].zFace, SolvedarrayName[2][1][0].zFace, SolvedarrayName[2][0][0].zFace],
+[SolvedarrayName[1][2][0].zFace, SolvedarrayName[1][1][0].zFace, SolvedarrayName[1][0][0].zFace],
+[SolvedarrayName[0][2][0].zFace, SolvedarrayName[0][1][0].zFace, SolvedarrayName[0][0][0].zFace]]]
 
 
 # *************************************************************************************************
     
     
-def setup(): # this only runs once
+def setup(arrayName): # this only runs once
     
     size(600, 600, P3D) # creates window in 3d mode 
     strokeWeight(5)
-    noFill()
+    noFill(arrayName)
     rectMode(CENTER)
 
     
 # *************************************************************************************************
 
 
-def draw():
+def draw(arrayName):
     background(100, 100, 150) # background color
-    translate(width / 2, height / 2) # moves the cube so its actually in the frame
+    translate(width / 2, height / 2) # moves the arrayName so its actually in the frame
     fill(255)
     
     if viewState == 'free': # becasue of the way camera stuff works, this needs to be in draw
         rotateX(-mouseY * PI / 300)    # when you click the mouse, a function changes the variable viewState
         rotateY(mouseX * PI / 300)     # this top code follows mouse
     else:
-        rotateX((3 * PI / 4) + (PI / 16)) # the cube is set to a default position, which is + PI / 16 off normal
+        rotateX((3 * PI / 4) + (PI / 16)) # the arrayName is set to a default position, which is + PI / 16 off normal
         rotateY((3 * PI / 4) + (PI / 16))
 
-    createCubeVisual()
+    createarrayNameVisual(arrayName)
     
     
     
     # *************************************************************************************************
     
     
-def createCubeVisual():        
+def createarrayNameVisual(arrayName):        
     global Cube
     global block
-    refreshBlock() # updates the block array to the correct config
+    refreshBlock(arrayName) # updates the block array to the correct config
     
     for face in range(0, 6): # runs through the colors
         for x in range(0, 3): # creates a triple nested loop, the outside 2 loops run 3 times, the inside one runs 6 times
             for y in range(0, 3): # they run through and create all of the colors needed at the correct positionsr
                 if face == 0: # orange
-                    pushMatrix() # retrives a default pos
+                    pushMatrix(arrayName) # retrives a default pos
                     # no rotation
                     colorFaces(face, x, y) # this draw the face we are on, in this case its orange
-                    popMatrix() # undos the default pos
+                    popMatrix(arrayName) # undos the default pos
                 if face == 1: # green
-                    pushMatrix()
+                    pushMatrix(arrayName)
                     rotateY(PI / 2)
                     colorFaces(face, x, y)
-                    popMatrix()
+                    popMatrix(arrayName)
                 if face == 2: # yellow
-                    pushMatrix()
+                    pushMatrix(arrayName)
                     rotateX(-PI / 2)
                     colorFaces(face, x, y)
-                    popMatrix()
+                    popMatrix(arrayName)
                 if face == 3: # red
-                    pushMatrix()
+                    pushMatrix(arrayName)
                     rotateY(PI)
                     colorFaces(face, x, y)
-                    popMatrix()
+                    popMatrix(arrayName)
                 if face == 4: # blue
-                    pushMatrix()
+                    pushMatrix(arrayName)
                     rotateY(-PI / 2)
                     colorFaces(face, x, y)
-                    popMatrix()
+                    popMatrix(arrayName)
                 if face == 5: # white
-                    pushMatrix()
+                    pushMatrix(arrayName)
                     rotateX(PI / 2)
                     colorFaces(face, x, y)
-                    popMatrix()
+                    popMatrix(arrayName)
                 
    
          
@@ -279,38 +279,38 @@ def colored(c): # handles changing the color being painted
     # *************************************************************************************************
     
     
-def refreshBlock(): # this just resets block
+def refreshBlock(arrayName): # this just resets block
                     # its the same array as the one in initilization
     global block    # this one is just compressed
-    block = [[[Cube[2][0][0].yFace, Cube[2][0][1].yFace, Cube[2][0][2].yFace],
-    [Cube[1][0][0].yFace, Cube[1][0][1].yFace, Cube[1][0][2].yFace],
-    [Cube[0][0][0].yFace, Cube[0][0][1].yFace, Cube[0][0][2].yFace]],
-    [[Cube[0][0][0].xFace, Cube[0][0][1].xFace, Cube[0][0][2].xFace],
-    [Cube[0][1][0].xFace, Cube[0][1][1].xFace, Cube[0][1][2].xFace],
-    [Cube[0][2][0].xFace, Cube[0][2][1].xFace, Cube[0][2][2].xFace]],   
-    [[Cube[2][0][2].zFace, Cube[2][1][2].zFace, Cube[2][2][2].zFace],
-    [Cube[1][0][2].zFace, Cube[1][1][2].zFace, Cube[1][2][2].zFace],
-    [Cube[0][0][2].zFace, Cube[0][1][2].zFace, Cube[0][2][2].zFace]],    
-    [[Cube[0][2][0].yFace, Cube[0][2][1].yFace, Cube[0][2][2].yFace],
-    [Cube[1][2][0].yFace, Cube[1][2][1].yFace, Cube[1][2][2].yFace],
-    [Cube[2][2][0].yFace, Cube[2][2][1].yFace, Cube[2][2][2].yFace]],
-    [[Cube[2][2][0].xFace, Cube[2][2][1].xFace, Cube[2][2][2].xFace],
-    [Cube[2][1][0].xFace, Cube[2][1][1].xFace, Cube[2][1][2].xFace],
-    [Cube[2][0][0].xFace, Cube[2][0][1].xFace, Cube[2][0][2].xFace]],
-    [[Cube[2][2][0].zFace, Cube[2][1][0].zFace, Cube[2][0][0].zFace],
-    [Cube[1][2][0].zFace, Cube[1][1][0].zFace, Cube[1][0][0].zFace],
-    [Cube[0][2][0].zFace, Cube[0][1][0].zFace, Cube[0][0][0].zFace]]]
+    block = [[[arrayName[2][0][0].yFace, arrayName[2][0][1].yFace, arrayName[2][0][2].yFace],
+    [arrayName[1][0][0].yFace, arrayName[1][0][1].yFace, arrayName[1][0][2].yFace],
+    [arrayName[0][0][0].yFace, arrayName[0][0][1].yFace, arrayName[0][0][2].yFace]],
+    [[arrayName[0][0][0].xFace, arrayName[0][0][1].xFace, arrayName[0][0][2].xFace],
+    [arrayName[0][1][0].xFace, arrayName[0][1][1].xFace, arrayName[0][1][2].xFace],
+    [arrayName[0][2][0].xFace, arrayName[0][2][1].xFace, arrayName[0][2][2].xFace]],   
+    [[arrayName[2][0][2].zFace, arrayName[2][1][2].zFace, arrayName[2][2][2].zFace],
+    [arrayName[1][0][2].zFace, arrayName[1][1][2].zFace, arrayName[1][2][2].zFace],
+    [arrayName[0][0][2].zFace, arrayName[0][1][2].zFace, arrayName[0][2][2].zFace]],    
+    [[arrayName[0][2][0].yFace, arrayName[0][2][1].yFace, arrayName[0][2][2].yFace],
+    [arrayName[1][2][0].yFace, arrayName[1][2][1].yFace, arrayName[1][2][2].yFace],
+    [arrayName[2][2][0].yFace, arrayName[2][2][1].yFace, arrayName[2][2][2].yFace]],
+    [[arrayName[2][2][0].xFace, arrayName[2][2][1].xFace, arrayName[2][2][2].xFace],
+    [arrayName[2][1][0].xFace, arrayName[2][1][1].xFace, arrayName[2][1][2].xFace],
+    [arrayName[2][0][0].xFace, arrayName[2][0][1].xFace, arrayName[2][0][2].xFace]],
+    [[arrayName[2][2][0].zFace, arrayName[2][1][0].zFace, arrayName[2][0][0].zFace],
+    [arrayName[1][2][0].zFace, arrayName[1][1][0].zFace, arrayName[1][0][0].zFace],
+    [arrayName[0][2][0].zFace, arrayName[0][1][0].zFace, arrayName[0][0][0].zFace]]]
     
     
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
-    # these functions handle solving the cube
+    # these functions handle solving the arrayName
     
     
-def cubeNotSolved():
-    if Cube == SolvedCube and block == SolvedBlock:
+def arrayNameNotSolved(arrayName):
+    if arrayName == SolvedarrayName and block == SolvedBlock:
         return False
     else:
         return True
@@ -320,8 +320,8 @@ def cubeNotSolved():
     
     
 def compareBlocks(x, y, z):
-    if Cube[x][y][z] == solvedCube[x][y][z]:
-        if Cube[x][y][z].xFace == solvedCube[x][y][z].xFace and Cube[x][y][z].yFace == solvedCube[x][y][z].yFace and Cube[x][y][z].zFace == Cube[x][y][z].zFace:
+    if arrayName[x][y][z] == solvedarrayName[x][y][z]:
+        if arrayName[x][y][z].xFace == solvedarrayName[x][y][z].xFace and arrayName[x][y][z].yFace == solvedarrayName[x][y][z].yFace and arrayName[x][y][z].zFace == arrayName[x][y][z].zFace:
             return True
         else:
             return False
@@ -331,23 +331,23 @@ def compareBlocks(x, y, z):
     
     # *************************************************************************************************
     
-def solveCube():
-    if cross_Not_Solved():
-        solve_Cross()
+def solvearrayName(arrayName):
+    if cross_Not_Solved(arrayName):
+        solve_Cross(arrayName)
     
-    elif f2l_Not_Solved():
-        solve_f2l()
+    elif f2l_Not_Solved(arrayName):
+        solve_f2l(arrayName)
     
-    elif OLL_Not_Solved():
-        solve_OLL()
+    elif OLL_Not_Solved(arrayName):
+        solve_OLL(arrayName)
     
-    elif PLL_Not_Solved():
+    elif PLL_Not_Solved(arrayName):
         solve_PLL
         
     
     # *************************************************************************************************
     
-def cross_Not_Solved():
+def cross_Not_Solved(arrayName):
     for y in range(0, 2):
         if compare(1, y, 0) != True:
             return False
@@ -361,49 +361,49 @@ def cross_Not_Solved():
     # *************************************************************************************************
     
     
-def solve_Cross():
+def solve_Cross(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def f2l_Not_Solved():
+def f2l_Not_Solved(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def solve_f2l():
+def solve_f2l(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def OLL_Not_Solved():
+def OLL_Not_Solved(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def solve_OLL():
+def solve_OLL(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def PLL_Not_Solved():
+def PLL_Not_Solved(arrayName):
     pass
     
     
     # *************************************************************************************************
     
     
-def solve_PLL():
+def solve_PLL(arrayName):
     pass
     
     
@@ -419,7 +419,7 @@ def solve_PLL():
     # *************************************************************************************************
     
     
-def mouseClicked(): # if the mouse is clicked, it changes the value of viewState
+def mouseClicked(arrayName): # if the mouse is clicked, it changes the value of viewState
                     # which is interpreted in DRAW to change the camera mode
     global viewState
     
@@ -433,7 +433,7 @@ def mouseClicked(): # if the mouse is clicked, it changes the value of viewState
      # *************************************************************************************************   
 
 
-def scramble(): # generates a random 25 move scramble in list format that i can quickly run through for an initial scramble
+def scramble(arrayName): # generates a random 25 move scramble in list format that i can quickly run through for an initial scramble
     scramble_length = 25
     moves = ["R", "R_", "R2", "L", "L_", "L2", "U", "U_", "U2", "D", "D_", "D2", "F", "F_", "F2", "B", "B_", "B2"]  
     scramble = []
@@ -455,98 +455,99 @@ def scramble(): # generates a random 25 move scramble in list format that i can 
      
 # gets run by draw if a key is released, it is here for easier reading and a smaller draw funtion
 
-def keyPressed(): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
+def keyPressed(arrayName): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
     if key == '\n':
-        if cubeNotSolved():
-            solveCube()
+        if arrayNameNotSolved(arrayName):
+            solvearrayName(arrayName)
     elif key == 'r': # single moves
-        R(Cube)
+        R(arrayName)
     elif key == 'R':
-        R_()
+        R_(arrayName)
     elif key == 'L':
-        L_()
+        L_(arrayName)
     elif key == 'l':
-        L()
+        L(arrayName)
     elif key == 'f':
-        F()
+        F(arrayName)
     elif key == 'F':
-        F_()
+        F_(arrayName)
     elif key == 'b':
-        B()
+        B(arrayName)
     elif key == 'B':
-        B_()
+        B_(arrayName)
     elif key == 'u':
-        U()
+        U(arrayName)
     elif key == 'U':
-        U_()
+        U_(arrayName)
     elif key == 'd':
-        D()
+        D(arrayName)
     elif key == 'D':
-        D_()
+        D_(arrayName)
     elif key == 'm': # middle moves
-        M()
+        M(arrayName)
     elif key == 'M':
-        M_()
+        M_(arrayName)
     elif key == 's':
-        S()
+        S(arrayName)
     elif key == 'S':
-        S_()
+        S_(arrayName)
     elif key == 'e':
-        E()
+        E(arrayName)
     elif key == 'E':
-        E_()
+        E_(arrayName)
     elif key == 'x': # rotations
-        X()
+        X(arrayName)
     elif key == 'X':
-        X_()
+        X_(arrayName)
     elif key == 'y':
-        Y()
+        Y(arrayName)
     elif key == 'Y':
-        Y_()
+        Y_(arrayName)
     elif key == 'z':
-        Z()
+        Z(arrayName)
     elif key == 'Z':
-        Z_()
+        Z_(arrayName)
     elif key == ' ':
-        applyScramble()
+        applyScramble(arrayName)
 
 
     # *************************************************************************************************
     
     
-def applyScramble():
-    sk = scramble()
+def applyScramble(arrayName):
+    sk = scramble(arrayName)
     for move in sk:
         if move == 'R':
-            R()
+            R(arrayName)
         elif move == 'R_':
-            R_()
+            R_(arrayName)
         elif move == 'L_':
-            L_()
+            L_(arrayName)
         elif move == 'L':
-            L()
+            L(arrayName)
         elif move == 'F':
-            F()
+            F(arrayName)
         elif move == 'F_':
-            F_()
+            F_(arrayName)
         elif move == 'B':
-            B()
+            B(arrayName)
         elif move == 'B_':
-            B_()
+            B_(arrayName)
         elif move == 'U':
-            U()
+            U(arrayName)
         elif move == 'U_':
-            U_()
+            U_(arrayName)
             
     
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
-    # these functions handle turning the cube 
+    # these functions handle turning the arrayName 
 
 
 def R(arrayName): 
+    global Cube
     
     # edges
     subs               = arrayName[2][0][1]
@@ -573,765 +574,765 @@ def R(arrayName):
   # *************************************************************************************************  
   
   
-def R_(): 
+def R_(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[2][0][1]
-    Cube[2][0][1]      = Cube[2][1][2]
-    Cube[2][1][2]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[2][1][0]
-    Cube[2][1][0]      = subs
+    subs               = arrayName[2][0][1]
+    arrayName[2][0][1]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = subs
 
     # corners
-    subs               = Cube[2][0][0]
-    Cube[2][0][0]      = Cube[2][0][2]
-    Cube[2][0][2]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[2][2][0]
-    Cube[2][2][0]      = subs
+    subs               = arrayName[2][0][0]
+    arrayName[2][0][0]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = subs
     
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[2][yPos][zPos].yFace
-            Cube[2][yPos][zPos].yFace = Cube[2][yPos][zPos].zFace
-            Cube[2][yPos][zPos].zFace = subs
+            subs = arrayName[2][yPos][zPos].yFace
+            arrayName[2][yPos][zPos].yFace = arrayName[2][yPos][zPos].zFace
+            arrayName[2][yPos][zPos].zFace = subs
     
     
     # *************************************************************************************************
   
   
-def R2():
-    R()
-    R()  
+def R2(arrayName):
+    R(arrayName)
+    R(arrayName)  
   
   
     # *************************************************************************************************  
   
   
-def L(): 
+def L(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[0][1][2]
-    Cube[0][1][2]      = Cube[0][2][1]
-    Cube[0][2][1]      = Cube[0][1][0]
-    Cube[0][1][0]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = arrayName[0][2][1]
+    arrayName[0][2][1]      = arrayName[0][1][0]
+    arrayName[0][1][0]      = subs
 
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[0][0][2]
-    Cube[0][0][2]      = Cube[0][2][2]
-    Cube[0][2][2]      = Cube[0][2][0]
-    Cube[0][2][0]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[0][0][2]
+    arrayName[0][0][2]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = arrayName[0][2][0]
+    arrayName[0][2][0]      = subs
     
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[0][yPos][zPos].yFace
-            Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
-            Cube[0][yPos][zPos].zFace = subs
+            subs = arrayName[0][yPos][zPos].yFace
+            arrayName[0][yPos][zPos].yFace = arrayName[0][yPos][zPos].zFace
+            arrayName[0][yPos][zPos].zFace = subs
     
   
   # *************************************************************************************************  
   
   
-def L_(): 
+def L_(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[0][1][0]
-    Cube[0][1][0]      = Cube[0][2][1]
-    Cube[0][2][1]      = Cube[0][1][2]
-    Cube[0][1][2]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[0][1][0]
+    arrayName[0][1][0]      = arrayName[0][2][1]
+    arrayName[0][2][1]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = subs
 
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[0][2][0]
-    Cube[0][2][0]      = Cube[0][2][2]
-    Cube[0][2][2]      = Cube[0][0][2]
-    Cube[0][0][2]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[0][2][0]
+    arrayName[0][2][0]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = arrayName[0][0][2]
+    arrayName[0][0][2]      = subs
     
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[0][yPos][zPos].yFace
-            Cube[0][yPos][zPos].yFace = Cube[0][yPos][zPos].zFace
-            Cube[0][yPos][zPos].zFace = subs
+            subs = arrayName[0][yPos][zPos].yFace
+            arrayName[0][yPos][zPos].yFace = arrayName[0][yPos][zPos].zFace
+            arrayName[0][yPos][zPos].zFace = subs
         
         
     # *************************************************************************************************  
   
   
-def L2():
-    L()
-    L()  
+def L2(arrayName):
+    L(arrayName)
+    L(arrayName)  
   
   
     # *************************************************************************************************
 
 
-def F(): 
+def F(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[1][0][0]
-    Cube[1][0][0]      = Cube[2][0][1]
-    Cube[2][0][1]      = Cube[1][0][2]
-    Cube[1][0][2]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[1][0][0]
+    arrayName[1][0][0]      = arrayName[2][0][1]
+    arrayName[2][0][1]      = arrayName[1][0][2]
+    arrayName[1][0][2]      = subs
 
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[2][0][0]
-    Cube[2][0][0]      = Cube[2][0][2]
-    Cube[2][0][2]      = Cube[0][0][2]
-    Cube[0][0][2]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[2][0][0]
+    arrayName[2][0][0]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = arrayName[0][0][2]
+    arrayName[0][0][2]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][0][zPos].xFace
-            Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
-            Cube[xPos][0][zPos].zFace = subs
+            subs = arrayName[xPos][0][zPos].xFace
+            arrayName[xPos][0][zPos].xFace = arrayName[xPos][0][zPos].zFace
+            arrayName[xPos][0][zPos].zFace = subs
         
         
         # *************************************************************************************************  
   
   
-def F_(): 
+def F_(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[1][0][2]
-    Cube[1][0][2]      = Cube[2][0][1]
-    Cube[2][0][1]      = Cube[1][0][0]
-    Cube[1][0][0]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[1][0][2]
+    arrayName[1][0][2]      = arrayName[2][0][1]
+    arrayName[2][0][1]      = arrayName[1][0][0]
+    arrayName[1][0][0]      = subs
 
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[0][0][2]
-    Cube[0][0][2]      = Cube[2][0][2]
-    Cube[2][0][2]      = Cube[2][0][0]
-    Cube[2][0][0]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[0][0][2]
+    arrayName[0][0][2]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = arrayName[2][0][0]
+    arrayName[2][0][0]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][0][zPos].xFace
-            Cube[xPos][0][zPos].xFace = Cube[xPos][0][zPos].zFace
-            Cube[xPos][0][zPos].zFace = subs
+            subs = arrayName[xPos][0][zPos].xFace
+            arrayName[xPos][0][zPos].xFace = arrayName[xPos][0][zPos].zFace
+            arrayName[xPos][0][zPos].zFace = subs
      
         
     # *************************************************************************************************
 
 
-def F2():
-    F()
-    F()  
+def F2(arrayName):
+    F(arrayName)
+    F(arrayName)  
   
   
     # *************************************************************************************************
     
    
-def B(): 
+def B(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[0][2][1]
-    Cube[0][2][1]      = Cube[1][2][2]
-    Cube[1][2][2]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[1][2][0]
-    Cube[1][2][0]      = subs
+    subs               = arrayName[0][2][1]
+    arrayName[0][2][1]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = subs
     
     # corners
-    subs               = Cube[0][2][0]
-    Cube[0][2][0]      = Cube[0][2][2]
-    Cube[0][2][2]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[2][2][0]
-    Cube[2][2][0]      = subs
+    subs               = arrayName[0][2][0]
+    arrayName[0][2][0]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][2][zPos].xFace
-            Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
-            Cube[xPos][2][zPos].zFace = subs
+            subs = arrayName[xPos][2][zPos].xFace
+            arrayName[xPos][2][zPos].xFace = arrayName[xPos][2][zPos].zFace
+            arrayName[xPos][2][zPos].zFace = subs
     
         
     # *************************************************************************************************
     
     
-def B_(): 
+def B_(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[0][2][1]
-    Cube[0][2][1]      = Cube[1][2][0]
-    Cube[1][2][0]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[1][2][2]
-    Cube[1][2][2]      = subs
+    subs               = arrayName[0][2][1]
+    arrayName[0][2][1]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = subs
     
     # corners
-    subs               = Cube[0][2][0]
-    Cube[0][2][0]      = Cube[2][2][0]
-    Cube[2][2][0]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[0][2][2]
-    Cube[0][2][2]      = subs
+    subs               = arrayName[0][2][0]
+    arrayName[0][2][0]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][2][zPos].xFace
-            Cube[xPos][2][zPos].xFace = Cube[xPos][2][zPos].zFace
-            Cube[xPos][2][zPos].zFace = subs
+            subs = arrayName[xPos][2][zPos].xFace
+            arrayName[xPos][2][zPos].xFace = arrayName[xPos][2][zPos].zFace
+            arrayName[xPos][2][zPos].zFace = subs
     
         
     # *************************************************************************************************
     
     
-def B2():
-    B()
-    B()
+def B2(arrayName):
+    B(arrayName)
+    B(arrayName)
     
     
     # *************************************************************************************************
     
     
-def U(): 
+def U(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[1][0][2]
-    Cube[1][0][2]      = Cube[2][1][2]
-    Cube[2][1][2]      = Cube[1][2][2]
-    Cube[1][2][2]      = Cube[0][1][2]
-    Cube[0][1][2]      = subs
+    subs               = arrayName[1][0][2]
+    arrayName[1][0][2]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = subs
     
     # corners
-    subs               = Cube[0][0][2]
-    Cube[0][0][2]      = Cube[2][0][2]
-    Cube[2][0][2]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[0][2][2]
-    Cube[0][2][2]      = subs
+    subs               = arrayName[0][0][2]
+    arrayName[0][0][2]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][2].xFace
-            Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
-            Cube[xPos][yPos][2].yFace = subs
+            subs = arrayName[xPos][yPos][2].xFace
+            arrayName[xPos][yPos][2].xFace = arrayName[xPos][yPos][2].yFace
+            arrayName[xPos][yPos][2].yFace = subs
         
         
     # *************************************************************************************************
     
     
-def U_():
+def U_(arrayName):
     global Cube
 
     # edges
-    subs               = Cube[1][0][2]
-    Cube[1][0][2]      = Cube[0][1][2]
-    Cube[0][1][2]      = Cube[1][2][2]
-    Cube[1][2][2]      = Cube[2][1][2]
-    Cube[2][1][2]      = subs
+    subs               = arrayName[1][0][2]
+    arrayName[1][0][2]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = subs
     
     # corners
-    subs               = Cube[0][0][2]
-    Cube[0][0][2]      = Cube[0][2][2]
-    Cube[0][2][2]      = Cube[2][2][2]
-    Cube[2][2][2]      = Cube[2][0][2]
-    Cube[2][0][2]      = subs
+    subs               = arrayName[0][0][2]
+    arrayName[0][0][2]      = arrayName[0][2][2]
+    arrayName[0][2][2]      = arrayName[2][2][2]
+    arrayName[2][2][2]      = arrayName[2][0][2]
+    arrayName[2][0][2]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][2].xFace
-            Cube[xPos][yPos][2].xFace = Cube[xPos][yPos][2].yFace
-            Cube[xPos][yPos][2].yFace = subs
+            subs = arrayName[xPos][yPos][2].xFace
+            arrayName[xPos][yPos][2].xFace = arrayName[xPos][yPos][2].yFace
+            arrayName[xPos][yPos][2].yFace = subs
         
         
 # *************************************************************************************************
 
 
-def U2():
-    U()
-    U()
+def U2(arrayName):
+    U(arrayName)
+    U(arrayName)
     
     
 # *************************************************************************************************
 
 
-def D(): 
+def D(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[1][0][0]
-    Cube[1][0][0]      = Cube[0][1][0]
-    Cube[0][1][0]      = Cube[1][2][0]
-    Cube[1][2][0]      = Cube[2][1][0]
-    Cube[2][1][0]      = subs
+    subs               = arrayName[1][0][0]
+    arrayName[1][0][0]      = arrayName[0][1][0]
+    arrayName[0][1][0]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = subs
     
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[0][2][0]
-    Cube[0][2][0]      = Cube[2][2][0]
-    Cube[2][2][0]      = Cube[2][0][0]
-    Cube[2][0][0]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[0][2][0]
+    arrayName[0][2][0]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = arrayName[2][0][0]
+    arrayName[2][0][0]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][0].xFace
-            Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
-            Cube[xPos][yPos][0].yFace = subs
+            subs = arrayName[xPos][yPos][0].xFace
+            arrayName[xPos][yPos][0].xFace = arrayName[xPos][yPos][0].yFace
+            arrayName[xPos][yPos][0].yFace = subs
         
         
 # *************************************************************************************************
 
 
-def D_(): 
+def D_(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[1][0][0]
-    Cube[1][0][0]      = Cube[2][1][0]
-    Cube[2][1][0]      = Cube[1][2][0]
-    Cube[1][2][0]      = Cube[0][1][0]
-    Cube[0][1][0]      = subs
+    subs               = arrayName[1][0][0]
+    arrayName[1][0][0]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = arrayName[0][1][0]
+    arrayName[0][1][0]      = subs
     
     # corners
-    subs               = Cube[0][0][0]
-    Cube[0][0][0]      = Cube[2][0][0]
-    Cube[2][0][0]      = Cube[2][2][0]
-    Cube[2][2][0]      = Cube[0][2][0]
-    Cube[0][2][0]      = subs
+    subs               = arrayName[0][0][0]
+    arrayName[0][0][0]      = arrayName[2][0][0]
+    arrayName[2][0][0]      = arrayName[2][2][0]
+    arrayName[2][2][0]      = arrayName[0][2][0]
+    arrayName[0][2][0]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][0].xFace
-            Cube[xPos][yPos][0].xFace = Cube[xPos][yPos][0].yFace
-            Cube[xPos][yPos][0].yFace = subs
+            subs = arrayName[xPos][yPos][0].xFace
+            arrayName[xPos][yPos][0].xFace = arrayName[xPos][yPos][0].yFace
+            arrayName[xPos][yPos][0].yFace = subs
         
         
     # *************************************************************************************************
     
     
-def D2():
-    D()
-    D()
+def D2(arrayName):
+    D(arrayName)
+    D(arrayName)
     
     
     # *************************************************************************************************
 
 
-def M(): 
+def M(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[1][0][1]
-    Cube[1][0][1]      = Cube[1][1][2]
-    Cube[1][1][2]      = Cube[1][2][1]
-    Cube[1][2][1]      = Cube[1][1][0]
-    Cube[1][1][0]      = subs
+    subs               = arrayName[1][0][1]
+    arrayName[1][0][1]      = arrayName[1][1][2]
+    arrayName[1][1][2]      = arrayName[1][2][1]
+    arrayName[1][2][1]      = arrayName[1][1][0]
+    arrayName[1][1][0]      = subs
 
     # corners
-    subs               = Cube[1][0][0]
-    Cube[1][0][0]      = Cube[1][0][2]
-    Cube[1][0][2]      = Cube[1][2][2]
-    Cube[1][2][2]      = Cube[1][2][0]
-    Cube[1][2][0]      = subs
+    subs               = arrayName[1][0][0]
+    arrayName[1][0][0]      = arrayName[1][0][2]
+    arrayName[1][0][2]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = subs
     
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[1][yPos][zPos].yFace
-            Cube[1][yPos][zPos].yFace = Cube[1][yPos][zPos].zFace
-            Cube[1][yPos][zPos].zFace = subs
+            subs = arrayName[1][yPos][zPos].yFace
+            arrayName[1][yPos][zPos].yFace = arrayName[1][yPos][zPos].zFace
+            arrayName[1][yPos][zPos].zFace = subs
     
     
     # *************************************************************************************************
 
 
-def M_(): 
+def M_(arrayName): 
     global Cube
     
     
     # edges
-    subs               = Cube[1][0][1]
-    Cube[1][0][1]      = Cube[1][1][0]
-    Cube[1][1][0]      = Cube[1][2][1]
-    Cube[1][2][1]      = Cube[1][1][2]
-    Cube[1][1][2]      = subs
+    subs               = arrayName[1][0][1]
+    arrayName[1][0][1]      = arrayName[1][1][0]
+    arrayName[1][1][0]      = arrayName[1][2][1]
+    arrayName[1][2][1]      = arrayName[1][1][2]
+    arrayName[1][1][2]      = subs
 
     # corners
-    subs               = Cube[1][0][0]
-    Cube[1][0][0]      = Cube[1][2][0]
-    Cube[1][2][0]      = Cube[1][2][2]
-    Cube[1][2][2]      = Cube[1][0][2]
-    Cube[1][0][2]      = subs
+    subs               = arrayName[1][0][0]
+    arrayName[1][0][0]      = arrayName[1][2][0]
+    arrayName[1][2][0]      = arrayName[1][2][2]
+    arrayName[1][2][2]      = arrayName[1][0][2]
+    arrayName[1][0][2]      = subs
 
     # orientation
     for yPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[1][yPos][zPos].yFace
-            Cube[1][yPos][zPos].yFace = Cube[1][yPos][zPos].zFace
-            Cube[1][yPos][zPos].zFace = subs
+            subs = arrayName[1][yPos][zPos].yFace
+            arrayName[1][yPos][zPos].yFace = arrayName[1][yPos][zPos].zFace
+            arrayName[1][yPos][zPos].zFace = subs
                           
           
   # *************************************************************************************************  
 
 
-def M2():
-    M()
-    M()
+def M2(arrayName):
+    M(arrayName)
+    M(arrayName)
 
 
     # *************************************************************************************************
 
 
-def E(): 
+def E(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[1][0][1]
-    Cube[1][0][1]      = Cube[0][1][1]
-    Cube[0][1][1]      = Cube[1][2][1]
-    Cube[1][2][1]      = Cube[2][1][1]
-    Cube[2][1][1]      = subs
+    subs               = arrayName[1][0][1]
+    arrayName[1][0][1]      = arrayName[0][1][1]
+    arrayName[0][1][1]      = arrayName[1][2][1]
+    arrayName[1][2][1]      = arrayName[2][1][1]
+    arrayName[2][1][1]      = subs
     
     # corners
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[0][2][1]
-    Cube[0][2][1]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[2][0][1]
-    Cube[2][0][1]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[0][2][1]
+    arrayName[0][2][1]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[2][0][1]
+    arrayName[2][0][1]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][1].xFace
-            Cube[xPos][yPos][1].xFace = Cube[xPos][yPos][1].yFace
-            Cube[xPos][yPos][1].yFace = subs
+            subs = arrayName[xPos][yPos][1].xFace
+            arrayName[xPos][yPos][1].xFace = arrayName[xPos][yPos][1].yFace
+            arrayName[xPos][yPos][1].yFace = subs
 
 
     # *************************************************************************************************
 
 
-def E_(): 
+def E_(arrayName): 
     global Cube
 
     # edges
-    subs               = Cube[1][0][1]
-    Cube[1][0][1]      = Cube[2][1][1]
-    Cube[2][1][1]      = Cube[1][2][1]
-    Cube[1][2][1]      = Cube[0][1][1]
-    Cube[0][1][1]      = subs
+    subs               = arrayName[1][0][1]
+    arrayName[1][0][1]      = arrayName[2][1][1]
+    arrayName[2][1][1]      = arrayName[1][2][1]
+    arrayName[1][2][1]      = arrayName[0][1][1]
+    arrayName[0][1][1]      = subs
     
     # corners
-    subs               = Cube[0][0][1]
-    Cube[0][0][1]      = Cube[2][0][1]
-    Cube[2][0][1]      = Cube[2][2][1]
-    Cube[2][2][1]      = Cube[0][2][1]
-    Cube[0][2][1]      = subs
+    subs               = arrayName[0][0][1]
+    arrayName[0][0][1]      = arrayName[2][0][1]
+    arrayName[2][0][1]      = arrayName[2][2][1]
+    arrayName[2][2][1]      = arrayName[0][2][1]
+    arrayName[0][2][1]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for yPos in range(0, 3):
-            subs = Cube[xPos][yPos][1].xFace
-            Cube[xPos][yPos][1].xFace = Cube[xPos][yPos][1].yFace
-            Cube[xPos][yPos][1].yFace = subs
+            subs = arrayName[xPos][yPos][1].xFace
+            arrayName[xPos][yPos][1].xFace = arrayName[xPos][yPos][1].yFace
+            arrayName[xPos][yPos][1].yFace = subs
         
         
     # *************************************************************************************************
 
 
-def E2():
-    E()
-    E()
+def E2(arrayName):
+    E(arrayName)
+    E(arrayName)
 
 
     # *************************************************************************************************
 
 
-def S(): 
+def S(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][1][1]
-    Cube[0][1][1]      = Cube[1][1][0]
-    Cube[1][1][0]      = Cube[2][1][1]
-    Cube[2][1][1]      = Cube[1][1][2]
-    Cube[1][1][2]      = subs
+    subs               = arrayName[0][1][1]
+    arrayName[0][1][1]      = arrayName[1][1][0]
+    arrayName[1][1][0]      = arrayName[2][1][1]
+    arrayName[2][1][1]      = arrayName[1][1][2]
+    arrayName[1][1][2]      = subs
 
     # corners
-    subs               = Cube[0][1][0]
-    Cube[0][1][0]      = Cube[2][1][0]
-    Cube[2][1][0]      = Cube[2][1][2]
-    Cube[2][1][2]      = Cube[0][1][2]
-    Cube[0][1][2]      = subs
+    subs               = arrayName[0][1][0]
+    arrayName[0][1][0]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][1][zPos].xFace
-            Cube[xPos][1][zPos].xFace = Cube[xPos][1][zPos].zFace
-            Cube[xPos][1][zPos].zFace = subs
+            subs = arrayName[xPos][1][zPos].xFace
+            arrayName[xPos][1][zPos].xFace = arrayName[xPos][1][zPos].zFace
+            arrayName[xPos][1][zPos].zFace = subs
         
         
         # *************************************************************************************************  
   
   
-def S_(): 
+def S_(arrayName): 
     global Cube
     
     # edges
-    subs               = Cube[0][1][1]
-    Cube[0][1][1]      = Cube[1][1][2]
-    Cube[1][1][2]      = Cube[2][1][1]
-    Cube[2][1][1]      = Cube[1][1][0]
-    Cube[1][1][0]      = subs
+    subs               = arrayName[0][1][1]
+    arrayName[0][1][1]      = arrayName[1][1][2]
+    arrayName[1][1][2]      = arrayName[2][1][1]
+    arrayName[2][1][1]      = arrayName[1][1][0]
+    arrayName[1][1][0]      = subs
 
     # corners
-    subs               = Cube[0][1][0]
-    Cube[0][1][0]      = Cube[0][1][2]
-    Cube[0][1][2]      = Cube[2][1][2]
-    Cube[2][1][2]      = Cube[2][1][0]
-    Cube[2][1][0]      = subs
+    subs               = arrayName[0][1][0]
+    arrayName[0][1][0]      = arrayName[0][1][2]
+    arrayName[0][1][2]      = arrayName[2][1][2]
+    arrayName[2][1][2]      = arrayName[2][1][0]
+    arrayName[2][1][0]      = subs
     
     # orientation
     for xPos in range(0, 3):
         for zPos in range(0, 3):
-            subs = Cube[xPos][1][zPos].xFace
-            Cube[xPos][1][zPos].xFace = Cube[xPos][1][zPos].zFace
-            Cube[xPos][1][zPos].zFace = subs
+            subs = arrayName[xPos][1][zPos].xFace
+            arrayName[xPos][1][zPos].xFace = arrayName[xPos][1][zPos].zFace
+            arrayName[xPos][1][zPos].zFace = subs
      
         
     # *************************************************************************************************
 
 
-def S2():
-    S()
-    S()  
+def S2(arrayName):
+    S(arrayName)
+    S(arrayName)  
   
   
     # *************************************************************************************************
 
 
-def r(): 
-    R()
-    M_()
+def r(arrayName): 
+    R(arrayName)
+    M_(arrayName)
 
 
     # *************************************************************************************************
 
 
-def r_(): 
-    R_()
-    M()
-
-
-    # *************************************************************************************************
-
-    
-def r2(): 
-    r()
-    r()
-    
-
-    # *************************************************************************************************
-    
-    
-def l(): 
-    L()
-    M()
-
-
-    # *************************************************************************************************
-
-
-def l_(): 
-    L_()
-    M_()
+def r_(arrayName): 
+    R_(arrayName)
+    M(arrayName)
 
 
     # *************************************************************************************************
 
     
-def l2(): 
-    l()
-    l()
-
+def r2(arrayName): 
+    r(arrayName)
+    r(arrayName)
+    
 
     # *************************************************************************************************
     
-
-def u(): 
-    U()
-    E_()
-
-
-    # *************************************************************************************************
-
-
-def u_(): 
-    U_()
-    E()
-
-
-    # *************************************************************************************************
-
     
-def u2(): 
-    u()
-    u()
-
-
-    # *************************************************************************************************
-    
-
-def d(): 
-    D()
-    E()
+def l(arrayName): 
+    L(arrayName)
+    M(arrayName)
 
 
     # *************************************************************************************************
 
 
-def d_(): 
-    D_()
-    E_()
+def l_(arrayName): 
+    L_(arrayName)
+    M_(arrayName)
 
 
     # *************************************************************************************************
 
     
-def d2(): 
-    d()
-    d()
+def l2(arrayName): 
+    l(arrayName)
+    l(arrayName)
+
+
+    # *************************************************************************************************
+    
+
+def u(arrayName): 
+    U(arrayName)
+    E_(arrayName)
+
+
+    # *************************************************************************************************
+
+
+def u_(arrayName): 
+    U_(arrayName)
+    E(arrayName)
 
 
     # *************************************************************************************************
 
     
-def f(): 
-    F()
-    S()
+def u2(arrayName): 
+    u(arrayName)
+    u(arrayName)
+
+
+    # *************************************************************************************************
+    
+
+def d(arrayName): 
+    D(arrayName)
+    E(arrayName)
 
 
     # *************************************************************************************************
 
 
-def f_(): 
-    F_()
-    S_()
+def d_(arrayName): 
+    D_(arrayName)
+    E_(arrayName)
 
 
     # *************************************************************************************************
 
     
-def f2(): 
-    f()
-    f()
+def d2(arrayName): 
+    d(arrayName)
+    d(arrayName)
+
+
+    # *************************************************************************************************
+
+    
+def f(arrayName): 
+    F(arrayName)
+    S(arrayName)
+
+
+    # *************************************************************************************************
+
+
+def f_(arrayName): 
+    F_(arrayName)
+    S_(arrayName)
+
+
+    # *************************************************************************************************
+
+    
+def f2(arrayName): 
+    f(arrayName)
+    f(arrayName)
 
 
     # *************************************************************************************************
     
   
-def b(): 
-    B()
-    S_()
+def b(arrayName): 
+    B(arrayName)
+    S_(arrayName)
 
 
     # *************************************************************************************************
     
 
-def b_(): 
-    B_()
-    S()
+def b_(arrayName): 
+    B_(arrayName)
+    S(arrayName)
 
 
     # *************************************************************************************************
 
 
-def b2(): 
-    b()
-    b()
-
-    # *************************************************************************************************
-
-    
-def X(): 
-    R()
-    l_()
-
-
-    # *************************************************************************************************
-
-
-def X_(): 
-    R_()
-    l()
-
+def b2(arrayName): 
+    b(arrayName)
+    b(arrayName)
 
     # *************************************************************************************************
 
     
-def X2(): 
-    X()
-    X()
-
-
-    # *************************************************************************************************
-    
-
-def Y(): 
-    U()
-    d_()
+def X(arrayName): 
+    R(arrayName)
+    l_(arrayName)
 
 
     # *************************************************************************************************
 
 
-def Y_(): 
-    U_()
-    d()
+def X_(arrayName): 
+    R_(arrayName)
+    l(arrayName)
 
 
     # *************************************************************************************************
 
     
-def Y2(): 
-    Y()
-    Y()
+def X2(arrayName): 
+    X(arrayName)
+    X(arrayName)
 
 
     # *************************************************************************************************
     
 
-def Z(): 
-    F()
-    b_()
+def Y(arrayName): 
+    U(arrayName)
+    d_(arrayName)
 
 
     # *************************************************************************************************
 
 
-def Z_(): 
-    F_()
-    b()
+def Y_(arrayName): 
+    U_(arrayName)
+    d(arrayName)
+
+
+    # *************************************************************************************************
+
+    
+def Y2(arrayName): 
+    Y(arrayName)
+    Y(arrayName)
+
+
+    # *************************************************************************************************
+    
+
+def Z(arrayName): 
+    F(arrayName)
+    b_(arrayName)
+
+
+    # *************************************************************************************************
+
+
+def Z_(arrayName): 
+    F_(arrayName)
+    b(arrayName)
 
 
     # *************************************************************************************************
     
     
-def Z2(): 
-    Z()
-    Z()
+def Z2(arrayName): 
+    Z(arrayName)
+    Z(arrayName)
 
 
     # *************************************************************************************************
