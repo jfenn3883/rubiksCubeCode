@@ -32,9 +32,7 @@ class Block(object): # block
     # *************************************************************************************************
 
 
-# this section is for  
-
-
+# this section is for the actual visual cube  
 
 # creating the blocks, set up in the same format as Cube 
 white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
@@ -130,15 +128,117 @@ block = [ #### if you change this list change the one in refreshBlock(Cube) ####
     ]]
  
  
-SolvedCube = [[[ white_orange_green, orange_green, yellow_orange_green ], 
-[ white_green, green_, yellow_green ],
-[ white_red_green, red_green, yellow_red_green ]],
-[[ white_orange, orange_, yellow_orange ], 
-[ white_, core, yellow_ ],
-[ white_red, red_, yellow_red ]],
-[[ white_orange_blue, orange_blue, yellow_orange_blue ], 
-[ white_blue, blue_, yellow_blue ],
-[ white_red_blue, red_blue, yellow_red_blue ]]]          
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    
+    
+# this section deals with the solved cube    
+    
+s_white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
+s_orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
+s_yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
+s_white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
+s_green_ =                 Block('green_',                       'center',   'green',   None,       None)
+s_yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
+s_white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
+s_red_green =              Block('red_green',                    'edge',     'green',   'red',      None)
+s_yellow_red_green =       Block('yellow_red_green',             'corner',   'green',   'red',      'yellow')
+s_white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
+s_orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
+s_yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
+s_white_ =                 Block('white_',                       'center',   None,      None,       'white')
+s_core =                   Block('core',                         'core',     None,      None,       None)
+s_yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
+s_white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
+s_red_ =                   Block('red_',                         'center',   None,      'red',      None)
+s_yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
+s_white_orange_blue =      Block('white_orange_blue',            'corner',   'blue',    'orange',   'white')
+s_orange_blue =            Block('orange_blue',                  'edge',     'blue',    'orange',   None)
+s_yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
+s_white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
+s_blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
+s_yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
+s_white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
+s_red_blue =               Block('red_blue',                     'edge',     'blue',    'red',      None)
+s_yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
+        
+SolvedCube = [[[ s_white_orange_green, s_orange_green, s_yellow_orange_green ], 
+[ s_white_green, s_green_, s_yellow_green ],
+[ s_white_red_green, s_red_green, s_yellow_red_green ]],
+[[ s_white_orange, s_orange_, s_yellow_orange ], 
+[ s_white_, s_core, s_yellow_ ],
+[ s_white_red, s_red_, s_yellow_red ]],
+[[ s_white_orange_blue, s_orange_blue, s_yellow_orange_blue ], 
+[ s_white_blue, s_blue_, s_yellow_blue ],
+[ s_white_red_blue, s_red_blue, s_yellow_red_blue ]]]          
+    
+SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCube[2][0][2].yFace],
+[SolvedCube[1][0][0].yFace, SolvedCube[1][0][1].yFace, SolvedCube[1][0][2].yFace],
+[SolvedCube[0][0][0].yFace, SolvedCube[0][0][1].yFace, SolvedCube[0][0][2].yFace]],
+[[SolvedCube[0][0][0].xFace, SolvedCube[0][0][1].xFace, SolvedCube[0][0][2].xFace],
+[SolvedCube[0][1][0].xFace, SolvedCube[0][1][1].xFace, SolvedCube[0][1][2].xFace],
+[SolvedCube[0][2][0].xFace, SolvedCube[0][2][1].xFace, SolvedCube[0][2][2].xFace]],   
+[[SolvedCube[2][0][2].zFace, SolvedCube[2][1][2].zFace, SolvedCube[2][2][2].zFace],
+[SolvedCube[1][0][2].zFace, SolvedCube[1][1][2].zFace, SolvedCube[1][2][2].zFace],
+[SolvedCube[0][0][2].zFace, SolvedCube[0][1][2].zFace, SolvedCube[0][2][2].zFace]],    
+[[SolvedCube[0][2][0].yFace, SolvedCube[0][2][1].yFace, SolvedCube[0][2][2].yFace],
+[SolvedCube[1][2][0].yFace, SolvedCube[1][2][1].yFace, SolvedCube[1][2][2].yFace],
+[SolvedCube[2][2][0].yFace, SolvedCube[2][2][1].yFace, SolvedCube[2][2][2].yFace]],
+[[SolvedCube[2][2][0].xFace, SolvedCube[2][2][1].xFace, SolvedCube[2][2][2].xFace],
+[SolvedCube[2][1][0].xFace, SolvedCube[2][1][1].xFace, SolvedCube[2][1][2].xFace],
+[SolvedCube[2][0][0].xFace, SolvedCube[2][0][1].xFace, SolvedCube[2][0][2].xFace]],
+[[SolvedCube[2][2][0].zFace, SolvedCube[2][1][0].zFace, SolvedCube[2][0][0].zFace],
+[SolvedCube[1][2][0].zFace, SolvedCube[1][1][0].zFace, SolvedCube[1][0][0].zFace],
+[SolvedCube[0][2][0].zFace, SolvedCube[0][1][0].zFace, SolvedCube[0][0][0].zFace]]]
+
+    
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+
+
+# this section is for the hidden solving cube so the entire cube doesnt solve in one frame
+
+b_white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
+b_orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
+b_yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
+b_white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
+b_green_ =                 Block('green_',                       'center',   'green',   None,       None)
+b_yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
+b_white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
+b_red_green =              Block('red_green',                    'edge',     'green',   'red',      None)
+b_yellow_red_green =       Block('yellow_red_green',             'corner',   'green',   'red',      'yellow')
+b_white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
+b_orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
+b_yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
+b_white_ =                 Block('white_',                       'center',   None,      None,       'white')
+b_core =                   Block('core',                         'core',     None,      None,       None)
+b_yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
+b_white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
+b_red_ =                   Block('red_',                         'center',   None,      'red',      None)
+b_yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
+b_white_orange_blue =      Block('white_orange_blue',            'corner',   'blue',    'orange',   'white')
+b_orange_blue =            Block('orange_blue',                  'edge',     'blue',    'orange',   None)
+b_yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
+b_white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
+b_blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
+b_yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
+b_white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
+b_red_blue =               Block('red_blue',                     'edge',     'blue',    'red',      None)
+b_yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
+        
+BackCube = [[[ b_white_orange_green, b_orange_green, b_yellow_orange_green ], 
+[ b_white_green, b_green_, b_yellow_green ],
+[ b_white_red_green, b_red_green, b_yellow_red_green ]],
+[[ b_white_orange, b_orange_, b_yellow_orange ], 
+[ b_white_, b_core, b_yellow_ ],
+[ b_white_red, b_red_, b_yellow_red ]],
+[[ b_white_orange_blue, b_orange_blue, b_yellow_orange_blue ], 
+[ b_white_blue, b_blue_, b_yellow_blue ],
+[ b_white_red_blue, b_red_blue, b_yellow_red_blue ]]]          
     
 SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCube[2][0][2].yFace],
 [SolvedCube[1][0][0].yFace, SolvedCube[1][0][1].yFace, SolvedCube[1][0][2].yFace],
@@ -160,8 +260,13 @@ SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCub
 [SolvedCube[0][2][0].zFace, SolvedCube[0][1][0].zFace, SolvedCube[0][0][0].zFace]]]
 
 
-# *************************************************************************************************
-    
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+
+
+# this section is the actual running code the does various things like generate the cube or set it up
     
 def setup(): # this only runs once
     
@@ -189,9 +294,13 @@ def draw():
     createCubeVisual()
     
     
-    
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
     # *************************************************************************************************
     
+    
+# this section is various function defs
     
 def createCubeVisual():        
     global Cube
