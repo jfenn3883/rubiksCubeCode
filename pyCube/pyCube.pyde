@@ -240,24 +240,24 @@ BackCube = [[[ b_white_orange_green, b_orange_green, b_yellow_orange_green ],
 [ b_white_blue, b_blue_, b_yellow_blue ],
 [ b_white_red_blue, b_red_blue, b_yellow_red_blue ]]]          
     
-SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCube[2][0][2].yFace],
-[SolvedCube[1][0][0].yFace, SolvedCube[1][0][1].yFace, SolvedCube[1][0][2].yFace],
-[SolvedCube[0][0][0].yFace, SolvedCube[0][0][1].yFace, SolvedCube[0][0][2].yFace]],
-[[SolvedCube[0][0][0].xFace, SolvedCube[0][0][1].xFace, SolvedCube[0][0][2].xFace],
-[SolvedCube[0][1][0].xFace, SolvedCube[0][1][1].xFace, SolvedCube[0][1][2].xFace],
-[SolvedCube[0][2][0].xFace, SolvedCube[0][2][1].xFace, SolvedCube[0][2][2].xFace]],   
-[[SolvedCube[2][0][2].zFace, SolvedCube[2][1][2].zFace, SolvedCube[2][2][2].zFace],
-[SolvedCube[1][0][2].zFace, SolvedCube[1][1][2].zFace, SolvedCube[1][2][2].zFace],
-[SolvedCube[0][0][2].zFace, SolvedCube[0][1][2].zFace, SolvedCube[0][2][2].zFace]],    
-[[SolvedCube[0][2][0].yFace, SolvedCube[0][2][1].yFace, SolvedCube[0][2][2].yFace],
-[SolvedCube[1][2][0].yFace, SolvedCube[1][2][1].yFace, SolvedCube[1][2][2].yFace],
-[SolvedCube[2][2][0].yFace, SolvedCube[2][2][1].yFace, SolvedCube[2][2][2].yFace]],
-[[SolvedCube[2][2][0].xFace, SolvedCube[2][2][1].xFace, SolvedCube[2][2][2].xFace],
-[SolvedCube[2][1][0].xFace, SolvedCube[2][1][1].xFace, SolvedCube[2][1][2].xFace],
-[SolvedCube[2][0][0].xFace, SolvedCube[2][0][1].xFace, SolvedCube[2][0][2].xFace]],
-[[SolvedCube[2][2][0].zFace, SolvedCube[2][1][0].zFace, SolvedCube[2][0][0].zFace],
-[SolvedCube[1][2][0].zFace, SolvedCube[1][1][0].zFace, SolvedCube[1][0][0].zFace],
-[SolvedCube[0][2][0].zFace, SolvedCube[0][1][0].zFace, SolvedCube[0][0][0].zFace]]]
+BackBlock = [[[BackCube[2][0][0].yFace, BackCube[2][0][1].yFace, BackCube[2][0][2].yFace],
+[BackCube[1][0][0].yFace, BackCube[1][0][1].yFace, BackCube[1][0][2].yFace],
+[BackCube[0][0][0].yFace, BackCube[0][0][1].yFace, BackCube[0][0][2].yFace]],
+[[BackCube[0][0][0].xFace, BackCube[0][0][1].xFace, BackCube[0][0][2].xFace],
+[BackCube[0][1][0].xFace, BackCube[0][1][1].xFace, BackCube[0][1][2].xFace],
+[BackCube[0][2][0].xFace, BackCube[0][2][1].xFace, BackCube[0][2][2].xFace]],   
+[[BackCube[2][0][2].zFace, BackCube[2][1][2].zFace, BackCube[2][2][2].zFace],
+[BackCube[1][0][2].zFace, BackCube[1][1][2].zFace, BackCube[1][2][2].zFace],
+[BackCube[0][0][2].zFace, BackCube[0][1][2].zFace, BackCube[0][2][2].zFace]],    
+[[BackCube[0][2][0].yFace, BackCube[0][2][1].yFace, BackCube[0][2][2].yFace],
+[BackCube[1][2][0].yFace, BackCube[1][2][1].yFace, BackCube[1][2][2].yFace],
+[BackCube[2][2][0].yFace, BackCube[2][2][1].yFace, BackCube[2][2][2].yFace]],
+[[BackCube[2][2][0].xFace, BackCube[2][2][1].xFace, BackCube[2][2][2].xFace],
+[BackCube[2][1][0].xFace, BackCube[2][1][1].xFace, BackCube[2][1][2].xFace],
+[BackCube[2][0][0].xFace, BackCube[2][0][1].xFace, BackCube[2][0][2].xFace]],
+[[BackCube[2][2][0].zFace, BackCube[2][1][0].zFace, BackCube[2][0][0].zFace],
+[BackCube[1][2][0].zFace, BackCube[1][1][0].zFace, BackCube[1][0][0].zFace],
+[BackCube[0][2][0].zFace, BackCube[0][1][0].zFace, BackCube[0][0][0].zFace]]]
 
 
     # *************************************************************************************************
@@ -289,7 +289,7 @@ def draw():
         rotateY(mouseX * PI / 300)     # this top code follows mouse
     else:
         rotateX((3 * PI / 4) + (PI / 16)) # the Cube is set to a default position, which is + PI / 16 off normal
-        rotateY((3 * PI / 4) + (PI / 16))
+        rotateY((5 * PI / 4) - (PI / 16))
 
     createCubeVisual()
     
@@ -427,28 +427,35 @@ def refreshBlock(): # this just resets block
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
-    # these functions handle solving the Cube
     
     
-def CubeNotSolved():
-    if Cube == SolvedCube and block == SolvedBlock:
-        return False
-    else:
-        return True
-
+# these functions handle solving the Cube
+    
+    
+def CubeSolved(arrayName): # works
+    for filler in range(0, 4):
+        establish = True
+        for x in range(0, 3):
+            for y in range(0, 3):
+                for z in range(0, 3):
+                    if compare(x, y, z, arrayName) != True:
+                        establish = False
+        if establish == True:
+            return True
+        Y(arrayName)
+    return False
 
     # *************************************************************************************************
     
     
-def compareBlocks(x, y, z):
-    if Cube[x][y][z] == solvedCube[x][y][z]:
-        if Cube[x][y][z].xFace == solvedCube[x][y][z].xFace and Cube[x][y][z].yFace == solvedCube[x][y][z].yFace and Cube[x][y][z].zFace == Cube[x][y][z].zFace:
-            return True
-        else:
-            return False
-    else:
-        return False
-    
+def compare(x, y, z, arrayName): # works
+    for filler in range(0, 4):
+        if arrayName[x][y][z].name == SolvedCube[x][y][z].name and arrayName[x][y][z].xFace == SolvedCube[x][y][z].xFace:
+            if arrayName[x][y][z].yFace == SolvedCube[x][y][z].yFace and arrayName[x][y][z].zFace == SolvedCube[x][y][z].zFace:
+                return True
+        Y(arrayName)
+    return False
+        
     
     # *************************************************************************************************
     
@@ -468,30 +475,36 @@ def solveCube():
     
     # *************************************************************************************************
     
-def cross_Not_Solved():
-    for y in range(0, 2):
-        if compare(1, y, 0) != True:
+    
+def cross_solved(arrayName):
+    for y in range(0, 2): # for the y
+        if compare(1, y, 0, arrayName) != True: # if the blocks are different return False
             return False
     for x in range(0, 2):
-        if compare(x, 1, 0) != True:
+        if compare(x, 1, 0, arrayName) != True:
             return False
-    return True
+    return True # if it makes it here w/o hitting the False, it is solved
         
     
     
     # *************************************************************************************************
     
     
-def solve_Cross():
+def solve_cross():
     pass
     
     
     # *************************************************************************************************
     
     
-def f2l_Not_Solved():
-    pass
-    
+def f2l_solved(arrayName):
+    for x in range(0, 3):
+        for y in range(0, 3):
+            if compare(x, y, 1, arrayName) != True or compare(x, y, 2, arrayName) != True:
+                return False
+    return True
+                
+                
     
     # *************************************************************************************************
     
@@ -503,8 +516,15 @@ def solve_f2l():
     # *************************************************************************************************
     
     
-def OLL_Not_Solved():
-    pass
+def OLL_not_solved(arrayName):
+    if f2l_solved == True:
+        for x in range(0, 3):
+            for y in range(0, 3):
+                if arrayName[x][y][2].zFace != 'yellow':
+                    return False
+        return True
+    else:
+        return False
     
     
     # *************************************************************************************************
@@ -517,7 +537,7 @@ def solve_OLL():
     # *************************************************************************************************
     
     
-def PLL_Not_Solved():
+def PLL_not_solved():
     pass
     
     
@@ -534,10 +554,13 @@ def solve_PLL():
     
     
     
-    
-    
-    
     # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    # *************************************************************************************************
+    
+    
+# these handle clicks or other various things
     
     
 def mouseClicked(): # if the mouse is clicked, it changes the value of viewState
@@ -580,6 +603,8 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
     if key == '\n':
         if CubeNotSolved():
             solveCube()
+    elif key == '1':
+        print CubeSolved(Cube)
     elif key == 'r': # single moves
         R(Cube)
     elif key == 'R':
@@ -664,7 +689,8 @@ def applyScramble():
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
-    # these functions handle turning the Cube 
+    
+# these functions handle turning the Cube 
 
 
 def R(arrayName): 
