@@ -200,72 +200,6 @@ SolvedBlock = [[[SolvedCube[2][0][0].yFace, SolvedCube[2][0][1].yFace, SolvedCub
     # *************************************************************************************************
 
 
-# this section is for the hidden solving cube so the entire cube doesnt solve in one frame
-
-b_white_orange_green =     Block('white_orange_green',           'corner',   'green',   'orange',   'white')
-b_orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
-b_yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
-b_white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
-b_green_ =                 Block('green_',                       'center',   'green',   None,       None)
-b_yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
-b_white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
-b_red_green =              Block('red_green',                    'edge',     'green',   'red',      None)
-b_yellow_red_green =       Block('yellow_red_green',             'corner',   'green',   'red',      'yellow')
-b_white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
-b_orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
-b_yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
-b_white_ =                 Block('white_',                       'center',   None,      None,       'white')
-b_core =                   Block('core',                         'core',     None,      None,       None)
-b_yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
-b_white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
-b_red_ =                   Block('red_',                         'center',   None,      'red',      None)
-b_yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
-b_white_orange_blue =      Block('white_orange_blue',            'corner',   'blue',    'orange',   'white')
-b_orange_blue =            Block('orange_blue',                  'edge',     'blue',    'orange',   None)
-b_yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
-b_white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
-b_blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
-b_yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
-b_white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
-b_red_blue =               Block('red_blue',                     'edge',     'blue',    'red',      None)
-b_yellow_red_blue =        Block('yellow_red_blue',              'corner',   'blue',    'red',      'yellow')
-        
-BackCube = [[[ b_white_orange_green, b_orange_green, b_yellow_orange_green ], 
-[ b_white_green, b_green_, b_yellow_green ],
-[ b_white_red_green, b_red_green, b_yellow_red_green ]],
-[[ b_white_orange, b_orange_, b_yellow_orange ], 
-[ b_white_, b_core, b_yellow_ ],
-[ b_white_red, b_red_, b_yellow_red ]],
-[[ b_white_orange_blue, b_orange_blue, b_yellow_orange_blue ], 
-[ b_white_blue, b_blue_, b_yellow_blue ],
-[ b_white_red_blue, b_red_blue, b_yellow_red_blue ]]]          
-    
-BackBlock = [[[BackCube[2][0][0].yFace, BackCube[2][0][1].yFace, BackCube[2][0][2].yFace],
-[BackCube[1][0][0].yFace, BackCube[1][0][1].yFace, BackCube[1][0][2].yFace],
-[BackCube[0][0][0].yFace, BackCube[0][0][1].yFace, BackCube[0][0][2].yFace]],
-[[BackCube[0][0][0].xFace, BackCube[0][0][1].xFace, BackCube[0][0][2].xFace],
-[BackCube[0][1][0].xFace, BackCube[0][1][1].xFace, BackCube[0][1][2].xFace],
-[BackCube[0][2][0].xFace, BackCube[0][2][1].xFace, BackCube[0][2][2].xFace]],   
-[[BackCube[2][0][2].zFace, BackCube[2][1][2].zFace, BackCube[2][2][2].zFace],
-[BackCube[1][0][2].zFace, BackCube[1][1][2].zFace, BackCube[1][2][2].zFace],
-[BackCube[0][0][2].zFace, BackCube[0][1][2].zFace, BackCube[0][2][2].zFace]],    
-[[BackCube[0][2][0].yFace, BackCube[0][2][1].yFace, BackCube[0][2][2].yFace],
-[BackCube[1][2][0].yFace, BackCube[1][2][1].yFace, BackCube[1][2][2].yFace],
-[BackCube[2][2][0].yFace, BackCube[2][2][1].yFace, BackCube[2][2][2].yFace]],
-[[BackCube[2][2][0].xFace, BackCube[2][2][1].xFace, BackCube[2][2][2].xFace],
-[BackCube[2][1][0].xFace, BackCube[2][1][1].xFace, BackCube[2][1][2].xFace],
-[BackCube[2][0][0].xFace, BackCube[2][0][1].xFace, BackCube[2][0][2].xFace]],
-[[BackCube[2][2][0].zFace, BackCube[2][1][0].zFace, BackCube[2][0][0].zFace],
-[BackCube[1][2][0].zFace, BackCube[1][1][0].zFace, BackCube[1][0][0].zFace],
-[BackCube[0][2][0].zFace, BackCube[0][1][0].zFace, BackCube[0][0][0].zFace]]]
-
-
-    # *************************************************************************************************
-    # *************************************************************************************************
-    # *************************************************************************************************
-    # *************************************************************************************************
-
-
 # this section is the actual running code the does various things like generate the cube or set it up
     
 def setup(): # this only runs once
@@ -432,28 +366,31 @@ def refreshBlock(): # this just resets block
 # these functions handle solving the Cube
     
     
-def CubeSolved(arrayName): # works
-    for filler in range(0, 4):
+def CubeSolved(arrayName):
+    tempArray = arrayName
+    
+    for yCount in range(0, 4):
         establish = True
+        
         for x in range(0, 3):
             for y in range(0, 3):
                 for z in range(0, 3):
-                    if compare(x, y, z, arrayName) != True:
+                    if tempArray[x][y][z].name != SolvedCube[x][y][z].name:
                         establish = False
         if establish == True:
             return True
-        Y(arrayName)
+    
     return False
-
+    
+    
     # *************************************************************************************************
     
     
 def compare(x, y, z, arrayName): # works
-    for filler in range(0, 4):
-        if arrayName[x][y][z].name == SolvedCube[x][y][z].name and arrayName[x][y][z].xFace == SolvedCube[x][y][z].xFace:
-            if arrayName[x][y][z].yFace == SolvedCube[x][y][z].yFace and arrayName[x][y][z].zFace == SolvedCube[x][y][z].zFace:
-                return True
-        Y(arrayName)
+    tempArray = arrayName
+    if tempArray[x][y][z].name == SolvedCube[x][y][z].name and tempArray[x][y][z].xFace == SolvedCube[x][y][z].xFace:
+        if tempArray[x][y][z].yFace == SolvedCube[x][y][z].yFace and tempArray[x][y][z].zFace == SolvedCube[x][y][z].zFace:
+            return True
     return False
         
     
@@ -476,14 +413,16 @@ def solveCube():
     # *************************************************************************************************
     
     
-def cross_solved(arrayName):
-    for y in range(0, 2): # for the y
-        if compare(1, y, 0, arrayName) != True: # if the blocks are different return False
-            return False
-    for x in range(0, 2):
-        if compare(x, 1, 0, arrayName) != True:
-            return False
-    return True # if it makes it here w/o hitting the False, it is solved
+def cross_solved(arrayName): # works
+    tempArrayName = arrayName # i store and manipulate tempArray so the Y() moves dont do anything
+    if compare(1, 0, 0, tempArrayName) == True and compare(1, 2, 0, tempArrayName) == True:
+        if compare(0, 1, 0, tempArrayName) == True and compare(2, 1, 0, tempArrayName) == True: # if the 4 cross blocks are in the right place
+            if tempArrayName[1][0][0].yFace == tempArrayName[1][0][1].yFace and tempArrayName[1][2][0].yFace == tempArrayName[1][2][1].yFace:
+                if tempArrayName[0][1][0].xFace == tempArrayName[0][1][1].xFace and tempArrayName[2][1][0].xFace == tempArrayName[2][1][1].xFace: # if the faces match the centers
+                    return True # if i hit this, the cross is solved and i return true
+                
+    # if i make it to this, it means none of the 4 Y()'s worked
+    return False 
         
     
     
@@ -549,11 +488,9 @@ def solve_PLL():
     
     
     # *************************************************************************************************
-    
-    
-    
-    
-    
+
+
+
     # *************************************************************************************************
     # *************************************************************************************************
     # *************************************************************************************************
