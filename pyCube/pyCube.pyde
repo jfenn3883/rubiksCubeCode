@@ -365,7 +365,7 @@ def refreshBlock(): # this just resets block
 # these functions handle solving the Cube
     
     
-def CubeSolved(arrayName): # done
+def cube_solved(arrayName): # done
     tempArray = arrayName
     
     for yCount in range(0, 4):
@@ -402,17 +402,20 @@ def compare(x, y, z, arrayName): # done
     # *************************************************************************************************
     
 def solveCube():
-    if cross_Not_Solved():
+    if cross_solved() != True:
         solve_Cross()
     
-    elif f2l_Not_Solved():
-        solve_f2l()
-    
-    elif OLL_Not_Solved():
-        solve_OLL()
-    
-    elif PLL_Not_Solved():
-        solve_PLL()
+    else: 
+        if f2l_solved() != True:
+            solve_f2l()
+        
+        else:
+            if OLL_solved() != True:
+                solve_OLL()
+            
+            else:
+                if OLL_solved() == True and cube_solved != True:
+                    solve_PLL()
         
     
     # *************************************************************************************************
@@ -470,28 +473,18 @@ def solve_f2l():
     # *************************************************************************************************
     
     
-def OLL_not_solved(arrayName):
-    if f2l_solved == True:
-        for x in range(0, 3):
-            for y in range(0, 3):
-                if arrayName[x][y][2].zFace != 'yellow':
-                    return False
-        return True
-    else:
-        return False
-    
+def OLL_solved(arrayName): # done
+    tempArray = arrayName
+    for x in range(0, 3):
+        for y in range(0, 3):
+            if tempArray[x][y][2].zFace != SolvedCube[x][y][2].zFace: # this could be written as "!= 'yellow'", but this is good i do color neutral later
+                return False # if one of them arnt yellow
+    return True # if all of them are yellow i hit this
     
     # *************************************************************************************************
     
     
 def solve_OLL():
-    pass
-    
-    
-    # *************************************************************************************************
-    
-    
-def PLL_not_solved():
     pass
     
     
@@ -556,7 +549,7 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         if CubeSolved() == False:
             solveCube()
     elif key == '1':
-        print f2l_solved(Cube)
+        print OLL_solved(Cube)
     elif key == 'r': # single moves
         R(Cube)
     elif key == 'R':
