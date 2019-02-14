@@ -366,7 +366,7 @@ def refreshBlock(): # this just resets block
 # these functions handle solving the Cube
     
     
-def CubeSolved(arrayName):
+def CubeSolved(arrayName): # done
     tempArray = arrayName
     
     for yCount in range(0, 4):
@@ -378,15 +378,21 @@ def CubeSolved(arrayName):
                     if tempArray[x][y][z].name != SolvedCube[x][y][z].name:
                         establish = False
         if establish == True:
+            if yCount == 1:
+                Y_(arrayName)
+            elif yCount == 2:
+                Y2(arrayName)
+            elif yCount == 3:
+                Y(arrayName)
             return True
-    
+        Y(arrayName)
     return False
     
     
     # *************************************************************************************************
     
     
-def compare(x, y, z, arrayName): # works
+def compare(x, y, z, arrayName): # done
     tempArray = arrayName
     if tempArray[x][y][z].name == SolvedCube[x][y][z].name and tempArray[x][y][z].xFace == SolvedCube[x][y][z].xFace:
         if tempArray[x][y][z].yFace == SolvedCube[x][y][z].yFace and tempArray[x][y][z].zFace == SolvedCube[x][y][z].zFace:
@@ -413,7 +419,8 @@ def solveCube():
     # *************************************************************************************************
     
     
-def cross_solved(arrayName): # works
+def cross_solved(arrayName): # done
+    # this checks the blocks and then the center piece above them, instead of rotating the cube
     tempArrayName = arrayName # i store and manipulate tempArray so the Y() moves dont do anything
     if compare(1, 0, 0, tempArrayName) == True and compare(1, 2, 0, tempArrayName) == True:
         if compare(0, 1, 0, tempArrayName) == True and compare(2, 1, 0, tempArrayName) == True: # if the 4 cross blocks are in the right place
@@ -421,7 +428,6 @@ def cross_solved(arrayName): # works
                 if tempArrayName[0][1][0].xFace == tempArrayName[0][1][1].xFace and tempArrayName[2][1][0].xFace == tempArrayName[2][1][1].xFace: # if the faces match the centers
                     return True # if i hit this, the cross is solved and i return true
                 
-    # if i make it to this, it means none of the 4 Y()'s worked
     return False 
         
     
@@ -541,7 +547,7 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         if CubeNotSolved():
             solveCube()
     elif key == '1':
-        print CubeSolved(Cube)
+        print cross_solved(Cube)
     elif key == 'r': # single moves
         R(Cube)
     elif key == 'R':
