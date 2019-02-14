@@ -39,7 +39,7 @@ orange_green =           Block('orange_green',                 'edge',     'gree
 yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
     
 white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
-green_ =                 Block('green_',                       'center',   'green',   None,       None)
+green_ =                 Block('green',                       'center',   'green',   None,       None)
 yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
     
 white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
@@ -48,15 +48,15 @@ yellow_red_green =       Block('yellow_red_green',             'corner',   'gree
     
     
 white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
-orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
+orange_ =                Block('orange',                      'center',   None,      'orange',   None)
 yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
     
-white_ =                 Block('white_',                       'center',   None,      None,       'white')
+white_ =                 Block('white',                       'center',   None,      None,       'white')
 core =                   Block('core',                         'core',     None,      None,       None)
-yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
+yellow_ =                Block('yellow',                      'center',   None,      None,       'yellow')
     
 white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
-red_ =                   Block('red_',                         'center',   None,      'red',      None)
+red_ =                   Block('red',                         'center',   None,      'red',      None)
 yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
     
     
@@ -65,7 +65,7 @@ orange_blue =            Block('orange_blue',                  'edge',     'blue
 yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
     
 white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
-blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
+blue_ =                  Block('blue',                        'center',   'blue',    None,       None)
 yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
     
 white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
@@ -139,25 +139,25 @@ s_white_orange_green =     Block('white_orange_green',           'corner',   'gr
 s_orange_green =           Block('orange_green',                 'edge',     'green',   'orange',   None)
 s_yellow_orange_green =    Block('yellow_orange_green',          'corner',   'green',   'orange',   'yellow')
 s_white_green =            Block('white_green',                  'edge',     'green',   None,       'white')
-s_green_ =                 Block('green_',                       'center',   'green',   None,       None)
+s_green_ =                 Block('green',                       'center',   'green',   None,       None)
 s_yellow_green =           Block('yellow_green',                 'edge',     'green',   None,       'yellow')
 s_white_red_green =        Block('white_red_green',              'corner',   'green',   'red',      'white')
 s_red_green =              Block('red_green',                    'edge',     'green',   'red',      None)
 s_yellow_red_green =       Block('yellow_red_green',             'corner',   'green',   'red',      'yellow')
 s_white_orange =           Block('white_orange',                 'edge',     None,      'orange',   'white')
-s_orange_ =                Block('orange_',                      'center',   None,      'orange',   None)
+s_orange_ =                Block('orange',                      'center',   None,      'orange',   None)
 s_yellow_orange =          Block('yellow_orange',                'edge',     None,      'orange',   'yellow')
-s_white_ =                 Block('white_',                       'center',   None,      None,       'white')
+s_white_ =                 Block('white',                       'center',   None,      None,       'white')
 s_core =                   Block('core',                         'core',     None,      None,       None)
-s_yellow_ =                Block('yellow_',                      'center',   None,      None,       'yellow')
+s_yellow_ =                Block('yellow',                      'center',   None,      None,       'yellow')
 s_white_red =              Block('white_red',                    'edge',     None,      'red',      'white')
-s_red_ =                   Block('red_',                         'center',   None,      'red',      None)
+s_red_ =                   Block('red',                         'center',   None,      'red',      None)
 s_yellow_red =             Block('yellow_red',                   'edge',     None,      'red',      'yellow')
 s_white_orange_blue =      Block('white_orange_blue',            'corner',   'blue',    'orange',   'white')
 s_orange_blue =            Block('orange_blue',                  'edge',     'blue',    'orange',   None)
 s_yellow_orange_blue =     Block('yellow_orange_blue',           'corner',   'blue',    'orange',   'yellow')
 s_white_blue =             Block('white_blue',                   'edge',     'blue',    None,       'white')
-s_blue_ =                  Block('blue_',                        'center',   'blue',    None,       None)
+s_blue_ =                  Block('blue',                        'center',   'blue',    None,       None)
 s_yellow_blue =            Block('yellow_blue',                  'edge',     'blue',    None,       'yellow')
 s_white_red_blue =         Block('white_red_blue',               'corner',   'blue',    'red',      'white')
 s_red_blue =               Block('red_blue',                     'edge',     'blue',    'red',      None)
@@ -365,32 +365,6 @@ def refreshBlock(): # this just resets block
 # these functions handle solving the Cube
     
     
-def cube_solved(arrayName): # done
-    tempArray = arrayName
-    
-    for yCount in range(0, 4):
-        establish = True
-        
-        for x in range(0, 3):
-            for y in range(0, 3):
-                for z in range(0, 3):
-                    if tempArray[x][y][z].name != SolvedCube[x][y][z].name:
-                        establish = False
-        if establish == True:
-            if yCount == 1:
-                Y_(arrayName)
-            elif yCount == 2:
-                Y2(arrayName)
-            elif yCount == 3:
-                Y(arrayName)
-            return True
-        Y(arrayName)
-    return False
-    
-    
-    # *************************************************************************************************
-    
-    
 def compare(x, y, z, arrayName): # done
     tempArray = arrayName
     if tempArray[x][y][z].name == SolvedCube[x][y][z].name and tempArray[x][y][z].xFace == SolvedCube[x][y][z].xFace:
@@ -421,6 +395,32 @@ def solveCube():
     # *************************************************************************************************
     
     
+def cube_solved(arrayName): # done
+    tempArray = arrayName
+    
+    for yCount in range(0, 4):
+        establish = True
+        
+        for x in range(0, 3):
+            for y in range(0, 3):
+                for z in range(0, 3):
+                    if tempArray[x][y][z].name != SolvedCube[x][y][z].name:
+                        establish = False
+        if establish == True:
+            if yCount == 1:
+                Y_(arrayName)
+            elif yCount == 2:
+                Y2(arrayName)
+            elif yCount == 3:
+                Y(arrayName)
+            return True
+        Y(arrayName)
+    return False
+    
+    
+    # *************************************************************************************************
+    
+    
 def cross_solved(arrayName): # done
     # this checks the blocks and then the center piece above them, instead of rotating the cube
     tempArrayName = arrayName # i store and manipulate tempArray so the Y() moves dont do anything
@@ -431,18 +431,70 @@ def cross_solved(arrayName): # done
                     return True # if i hit this, the cross is solved and i return true
                 
     return False 
-        
     
     
     # *************************************************************************************************
     
     
-def solve_cross():
+def solve_cross(arrayName):
+    firstBlockOnBottom(arrayName) # if there is a block on bottom with white face down, it will do this one first
+    blocksOnTop(arrayName) 
+    
+    
+    # *************************************************************************************************
+    
+    
+def firstBlockOnBottom(arrayName):
+    tempArray = arrayName
+    
+    if tempArray[1][0][0].zFace == tempArray[1][1][0].zFace: # checks if the bottom's face color is the same as the bottom center
+        firstEdgeMove(1, 0, 0, arrayName)
+    else:
+        if tempArray[2][1][0].zFace == tempArray[1][1][0].zFace:
+            firstEdgeMove(2, 1, 0, arrayName)
+        else:
+            if tempArray[1][2][0].zFace == tempArray[1][1][0].zFace:
+                firstEdgeMove(1, 2, 0, arrayName)
+            else:
+                if tempArray[0][1][0].zFace == tempArray[1][1][0].zFace:
+                    firstEdgeMove(0, 1, 0, arrayName)
+                    
+    
+    # *************************************************************************************************
+    
+    
+def firstEdgeMove(x, y, z, arrayName):
+    tempArray = arrayName
+    dCount = 0
+    currentBlock = tempArray[x][y][z]
+    
+    while (currentBlock.yFace != tempArray[x][y][z + 1].name) != (tempArray[x][y][z].xFace != tempArray[x][y][z + 1].name): # if the color doesnt match center
+        
+        D(tempArray) # move it one
+        dCount = dCount + 1 # add one to the count
+        if dCount > 100:
+            return 'error'
+        
+    if dCount == 1: # return based on dCount so its the lowest number of moves
+        D(arrayName)
+        return 'D'
+    elif dCount == 2:
+        D2(arrayName)
+        return 'D2'
+    elif dCount == 3:
+        D_(arrayName)
+        return 'D_'
+
+    
+    # *************************************************************************************************
+    
+def blocksOnTop(arrayName):
     pass
     
     
-    # *************************************************************************************************
     
+    
+    # *************************************************************************************************
     
 def f2l_solved(arrayName): # done
     for yCount in range(0, 4):
@@ -545,7 +597,7 @@ def keyPressed(): # the test_ori print the blocks position and orientation to th
         if CubeSolved() == False:
             solveCube()
     elif key == '1':
-        print OLL_solved(Cube)
+        firstBlockOnBottom(Cube)
     elif key == 'r': # single moves
         R(Cube)
     elif key == 'R':
