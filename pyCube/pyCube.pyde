@@ -3,7 +3,6 @@
 # holding shift will do the counter clockwise move
 
 
-
 # SETUP! defs, imports, and initiation
 import random
 
@@ -220,7 +219,7 @@ def draw():
     
     if viewState == 'free': # becasue of the way camera stuff works, this needs to be in draw
         rotateX(-mouseY * PI / 300)    # when you click the mouse, a function changes the variable viewState
-        rotateY(mouseX * PI / 300)     # this top code follows mouse
+        rotateY(-mouseX * PI / 300)     # this top code follows mouse
     else:
         rotateX((3 * PI / 4) + (PI / 16)) # the Cube is set to a default position, which is + PI / 16 off normal
         rotateY((5 * PI / 4) - (PI / 16))
@@ -442,13 +441,23 @@ def solve_cross():
     # *************************************************************************************************
     
     
-def f2l_solved(arrayName):
-    for x in range(0, 3):
-        for y in range(0, 3):
-            if compare(x, y, 1, arrayName) != True or compare(x, y, 2, arrayName) != True:
-                return False
-    return True
-                
+def f2l_solved(arrayName): # done
+    for yCount in range(0, 4):
+        establish = True
+        for x in range(0, 3):
+            for y in range(0, 3):
+                if compare(x, y, 1, arrayName) != True or compare(x, y, 2, arrayName) != True:
+                    establish = False
+        if establish == True:
+            if yCount == 1:
+                Y_(arrayName)
+            elif yCount == 2:
+                Y2(arrayName)
+            elif yCount == 3:
+                Y(arrayName)
+            return True
+        Y(arrayName)
+    return False             
                 
     
     # *************************************************************************************************
@@ -544,10 +553,10 @@ def scramble(): # generates a random 25 move scramble in list format that i can 
 
 def keyPressed(): # the test_ori print the blocks position and orientation to the console for debugging, they can be removed at a later date
     if key == '\n':
-        if CubeNotSolved():
+        if CubeSolved() == False:
             solveCube()
     elif key == '1':
-        print cross_solved(Cube)
+        print f2l_solved(Cube)
     elif key == 'r': # single moves
         R(Cube)
     elif key == 'R':
