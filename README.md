@@ -11,11 +11,11 @@ The Goals Of This Program Are To:
 - [X] track/retrieve current state of the cube using a 3-D array
 - [X] generate and apply a random scramble
 - [X] have every single, double, and cube rotation move available 
-- [ ] be able to detect if:
+- [X] be able to detect if:
     - [X] the cube is solved
     - [X] the cross is solved
     - [X] f2l is solved
-    - [ ] OLL is solved
+    - [X] OLL is solved
 - [ ] be able to solve the cube consistantly
 - [ ] export a string containing the scramble and solve moveset
 - [ ] improve efficiency of solves
